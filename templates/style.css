@@ -103,7 +103,7 @@ main{
 }
 
 .card-text{
-    max-height: 80px;
+    max-height: 72px;
     width:100%;
 }
 
@@ -130,7 +130,7 @@ footer{
 
 .add_note {
     position:fixed;
-    right: 30px;
+    left: 30px;
     bottom: 30px;
 }
 
