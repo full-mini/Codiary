@@ -31,7 +31,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"id": payload['id']})
-        return render_template('index.html', nickname=user_info["nick"])
+        return render_template('main.html', nickname=user_info["nick"])
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -42,8 +42,8 @@ def upload():
     title_receive = request.form['title_give']
     comment_receive = request.form['comment_give']
     doc={
-        'title':title_receive,
-        'comment':comment_receive
+        'title': title_receive,
+        'comment': comment_receive
     }
     db.thread.insert_one(doc)
     
