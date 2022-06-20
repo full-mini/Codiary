@@ -121,17 +121,17 @@ footer{
     padding-right: 1em;
 }
 
-.add_note{
-    position:fixed;
-    right: 30px;
-    bottom: 30px;
-}
-
 .login-box {
     border: 3px solid #999999;
     width: 300px;
     margin: 30px auto 30px;
     padding: 20px;
+}
+
+.add_note {
+    position:fixed;
+    right: 30px;
+    bottom: 30px;
 }
 
 .add_note > button {
