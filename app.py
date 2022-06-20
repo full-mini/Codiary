@@ -37,6 +37,9 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
+
+# 클라이언트에서 내용 받기(아이디, 제목, 내용)
+# DB에 저장(title, comment, ID)
 @app.route('/upload', methods = ["POST"])
 def upload():
     title_receive = request.form['title_give']
@@ -123,7 +126,7 @@ def api_login():
 # [유저 정보 확인 API]
 # 로그인된 유저만 call 할 수 있는 API입니다.
 # 유효한 토큰을 줘야 올바른 결과를 얻어갈 수 있습니다.
-# (그렇지 않으면 남의 장바구니라든가, 정보를 누구나 볼 수 있겠죠?)
+# (그렇지 않으면 남의 장바구니 라든가, 정보를 누구나 볼 수 있겠죠?)
 @app.route('/api/nick', methods=['GET'])
 def api_valid():
     token_receive = request.cookies.get('mytoken')
