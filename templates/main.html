@@ -26,6 +26,7 @@
 
     <script>
 
+        //게시물 저장 서버에 보내기
         function save_comment() {
             let title = $('#title').val()
             let comment = $('#comment').val()
@@ -55,6 +56,7 @@
 <body>
 <nav>
     <h1> {{nickname}} 님의 CODIARY12</h1>
+    <!-- 로그아웃 버튼 -->
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
 <main>
@@ -117,9 +119,11 @@
     </main>
 
     <footer>
+        <!-- 게시물 쓰기 버튼, 클릭시 모달 창 띄움 -->
         <div class="add_note"><button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button></div>
     </footer>
 
+<!-- 모달 창 설정 -->
 <div id="modal" class="modal-overlay">
     <div class="modal-window">
         <div class="title">
@@ -137,6 +141,7 @@
           style="height: 100px"></textarea>
                 <label for="floatingTextarea2">내용</label>
             </div>
+            <!-- 기록버튼 -->
             <button onclick="save_comment()" type="button" class="btn btn-dark"> 기록하기 </button>
         </div>
     </div>
