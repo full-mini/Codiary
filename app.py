@@ -37,6 +37,17 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
+@app.route('/upload', methods = ["POST"])
+def upload():
+    title_receive = request.form['title_give']
+    comment_receive = request.form['comment_give']
+    doc={
+        'title':title_receive,
+        'comment':comment_receive
+    }
+    db.thread.insert_one(doc)
+    
+    return jsonify({'msg':'게시 완료'})
 
 @app.route('/login')
 def login():
