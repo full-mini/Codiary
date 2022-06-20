@@ -75,7 +75,6 @@ nav{
 
 main{
     padding-top: 10px;
-    border: 3px solid yellow;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -99,7 +98,6 @@ main{
 .note-bottom{
     height: 40%;
     width: 100%;
-    border: 2px solid palegreen;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -116,7 +114,6 @@ main{
 }
 
 footer{
-    border: 1px solid red;
     height: 30px;
     display: flex;
     justify-content: flex-end;
