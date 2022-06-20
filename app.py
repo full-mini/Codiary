@@ -38,7 +38,7 @@ def home():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
-# 클라이언트에서 내용 받기(아이디, 제목, 내용)
+# 클라이언트에서 내용 받기(아이디, 제목, 내용, 카운트(중복 내용 처리))
 # DB에 저장(title, comment, ID)
 @app.route('/upload', methods = ["POST"])
 def upload():
@@ -65,6 +65,7 @@ def register():
 @app.route('/cordiary')
 def main():
     return render_template('main.html')
+#DB에서 정보 받아오기 (ID, 제목, 내용, 시간, 날짜)
 
 @app.route('/mainprac')
 def mainprac():

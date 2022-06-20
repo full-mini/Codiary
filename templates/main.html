@@ -44,6 +44,9 @@
         }
 
 
+        // 서버에서 정보 받아오기
+        //아이디, 제목, 내용, 시간, 카운트
+
         // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
         function logout() {
             $.removeCookie('mytoken');
@@ -61,7 +64,8 @@
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
 <main>
-
+   <!-- 정렬, 공유, 검색 기능 구현 -->
+   <!-- 게시물 크롤링, 언어관련 강의 -->
         <div class="card border-dark mb-3" style="width:65rem;">
           <div class="card-header">
             <div class="note-top-day ml-2">Day 02</div>
