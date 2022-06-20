@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def main():
+def login():
     return render_template("login.html")
 
 
@@ -14,7 +14,7 @@ def detail():
     return render_template("signin.html")
 
 @app.route('/main')
-def detail():
+def main():
     return render_template("main.html")
 
 
