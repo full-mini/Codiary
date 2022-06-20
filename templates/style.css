@@ -1,0 +1,41 @@
+body{
+    margin: 0px;
+}
+
+nav{
+    height:150px;
+    background-color:black;
+    border: 1px solid red;
+    color:white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 30px;
+}
+
+main{
+    height: 1000px;
+}
+
+footer{
+    border: 1px solid red;
+    height: 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-bottom: 1em;
+    padding-right: 1em;
+}
+
+.add_note{
+    position:fixed;
+    right: 30px;
+    bottom: 30px;
+}
+
+.add_note>button{
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 5rem;
+}
