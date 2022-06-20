@@ -48,6 +48,10 @@ def login():
 def register():
     return render_template('register.html')
 
+@app.route('/cordiary')
+def main():
+    return render_template('main.html')
+
 
 #################################
 ##  로그인을 위한 API            ##
