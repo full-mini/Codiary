@@ -15,6 +15,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+        <link rel="stylesheet" href="style.css">
+
+        <style>
+            .login-box {
+                border: 2px solid antiquewhite;
+                width: 300px;
+                margin: auto;
+            }
+        </style>
 
         <script>
             {% if msg %}
@@ -51,33 +60,33 @@
             }
 
         </script>
-
     </head>
     <body>
         <div class="section has-text-centered">
             <h1 class="title">로그인 페이지</h1>
             <div class="container" style="width:60%">
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label" for="userid">ID</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input type="text" class="input" id="userid" aria-describedby="emailHelp"
-                                       placeholder="My ID">
+                <div class="login-box"><div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label" for="userid">ID</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input type="text" class="input" id="userid" aria-describedby="emailHelp"
+                                           placeholder="My ID">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label" for="userpw">PW</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input type="password" class="input" id="userpw" placeholder="My Password">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label" for="userpw">PW</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input type="password" class="input" id="userpw" placeholder="My Password">
+                                </div>
                             </div>
                         </div>
                     </div>

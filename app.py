@@ -63,6 +63,10 @@ def register():
 def main():
     return render_template('main.html')
 
+@app.route('/mainprac')
+def mainprac():
+    return render_template('mainprac.html')
+
 
 #################################
 ##  로그인을 위한 API            ##
