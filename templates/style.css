@@ -123,7 +123,8 @@ footer{
 
 .login-box {
     border: 3px solid #999999;
-    width: 300px;
+    border-radius : 5px
+    width: 400px;
     margin: 30px auto 30px;
     padding: 20px;
 }
