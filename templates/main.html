@@ -13,8 +13,8 @@
           rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-     <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">
-
+    <!--<link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">-->
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <!-- JS -->
@@ -54,6 +54,19 @@
             window.location.href = '/login'
         }
 
+        function toggleBtn1(num) {
+            const btn1 = document.getElementById('btn')[num];
+
+        }
+
+        function more_context(num) {
+            document.getElementsByClassName("card-text")[num].style.maxHeight = "none";
+        }
+
+        function hide_context(num) {
+            document.getElementsByClassName("card-text")[num].style.maxHeight = "72px";
+        }
+
 
     </script>
 </head>
@@ -73,20 +86,21 @@
                 <div>22.6.21 PM 18:30</div>
                 <div>나는 제목이다</div>
             </div>
-          </div>
-          <div class="card-body text-dark note-bottom">
-            <p class="card-text ml-3 pr-5">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-            </p>
-            <div class="note-button ml-3 mt-2" >
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
-            </div>
-          </div>
         </div>
+        <div class="card-body text-dark note-bottom">
+            <div class="card-text ml-3 pr-5">
+                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세  삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
+            </div>
+            <div class="note-button ml-3 mt-2" >
+                <button type="button" class="btn btn-secondary" onclick="more_context(0)" style="display:block" ><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                <button type="button" class="btn btn-secondary" onclick="hide_context(0)" style="display:none " ><i class="fa-solid fa-caret-up"></i> 감추기</button>
+            </div>
+        </div>
+    </div>
 
 
-        <div class="card border-dark mb-3" style="width:65rem;">
-          <div class="card-header">
+    <div class="card border-dark mb-3" style="width:65rem;">
+        <div class="card-header">
             <div class="note-top-day ml-2">Day 02</div>
             <div class="note-top-title ml-2">
                 <div>22.6.21 PM 18:30</div>
@@ -95,30 +109,32 @@
           </div>
           <div class="card-body text-dark note-bottom">
             <p class="card-text ml-3 pr-5">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세  삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
             </p>
             <div class="note-button ml-3 mt-2" >
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                <button type="button" class="btn btn-secondary" onclick="more_context(0)" id="more_context" ><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                <button type="button" class="btn btn-secondary" onclick="hide_context(0)" id="hide_context" ><i class="fa-solid fa-caret-up"></i> 감추기</button>
             </div>
           </div>
         </div>
 
         <div class="card border-dark mb-3" style="width:65rem;">
-          <div class="card-header">
-            <div class="note-top-day ml-2">Day 02</div>
-            <div class="note-top-title ml-2">
+            <div class="card-header">
+                <div class="note-top-day ml-2">Day 02</div>
+                <div class="note-top-title ml-2">
                 <div>22.6.21 PM 18:30</div>
                 <div>나는 제목이다</div>
+                </div>
             </div>
-          </div>
-          <div class="card-body text-dark note-bottom">
-            <p class="card-text ml-3 pr-5">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-            </p>
-            <div class="note-button ml-3 mt-2" >
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+            <div class="card-body text-dark note-bottom">
+                <p class="card-text ml-3 pr-5" id="card-text">
+                    동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세  삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
+                </p>
+                <div class="note-button ml-3 mt-2" >
+                    <button type="button" class="btn btn-secondary" onclick="more_context(0)" id="more_context" ><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                    <button type="button" class="btn btn-secondary" onclick="hide_context(0)"><i class="fa-solid fa-caret-up"></i> 감추기</button>
+                </div>
             </div>
-          </div>
         </div>
 
     </main>
