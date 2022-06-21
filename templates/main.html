@@ -79,6 +79,7 @@
                 window.location.reload()
             }
         }
+
         function snsShare(title, url){
             if(navigator.share){/*web share api*/
                 navigator.share({
@@ -98,6 +99,7 @@
                                 toast.addEventListener('mouseenter', Swal.stopTimer)
                                 toast.addEventListener('mouseleave', Swal.resumeTimer)
                             }
+                            if (typeof navigator.share === "undefined")
                         })
                         Toast.fire({
                             icon: 'success',
@@ -123,6 +125,7 @@
                         Toast.fire({
                             icon: 'error',
                             title: '미지원 브라우저'/*미지원 브라우저나 공유 실패*/
+
                         })
                     });
                 });
@@ -134,15 +137,16 @@
 <nav>
     <h1> {{nickname}}님의 CODIARY</h1>
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
+            <a class="itcidersharesns" type="button" onclick="snsShare('title','url')" alt="web share api" id ="itcidershared">
+            <span class="material-symbols-outlined">share</span>
+        </a>
+
 </nav>
 <main>
     <div class="main-box">
         <div class="search-box d-flex justify-content-center">
             <input id="input-word" class="form-control" style="margin-right: 0.5rem">
-            <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button> </div>
-        <a class="itcidersharesns" type="button" onclick="snsShare('title','url')" alt="web share api" id ="itcidershared">
-            <span class="material-symbols-outlined">share</span>
-        </a>
+            <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button></div>
 
         <div class="card border-dark mb-3">
             <div class="card-header">
