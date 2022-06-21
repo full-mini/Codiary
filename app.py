@@ -115,7 +115,7 @@ def check_dup():
 
 
 # [로그인 API]
-# id, pw를 받아서 맞춰보고, 토큰을 만들어 발급합니다.
+# id, pw를 받아서 맞춰보고, 토큰을 만들어 발급합니다. !
 @app.route('/api/login', methods=['POST'])
 def api_login():
     id_receive = request.form['id_give']
