@@ -37,8 +37,6 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-
-
 # 클라이언트에서 내용 받기(아이디, 제목, 내용)
 # DB에 저장(title, comment, ID)
 @app.route('/upload', methods = ["POST"])
