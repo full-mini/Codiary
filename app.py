@@ -37,11 +37,6 @@ def home():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-@app.route('/')
-def main():
-    # DB에서 저장된 단어 찾아서 HTML에 나타내기
-    word = list(db.words.find({}, {"_id": False}))
-    return render_template("index.html", words=words)
 
 
 
@@ -73,7 +68,10 @@ def register():
 
 @app.route('/cordiary')
 def main():
-    return render_template('main.html')
+    # DB에서 저장된 단어 찾아서 HTML에 나타내기
+    word = list(db.words.find({}, {"_id": False}))
+    return render_template("main.html", words=word)
+
 
 @app.route('/mainprac')
 def mainprac():
