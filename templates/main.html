@@ -81,8 +81,8 @@
             } else {
                 document.getElementsByClassName("card-text")[num].style.height = "72px";
                 document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
-                document.getElementsByClassName("more_bt")[num].style.display="block";
-                document.getElementsByClassName("hide_bt")[num].style.display="none";
+                document.getElementsByClassName("more_bt")[num].style.display= "block";
+                document.getElementsByClassName("hide_bt")[num].style.display= "none";
                 document.getElementsByClassName("edit_bt")[num].style.display = "none";
                 document.getElementsByClassName("del_bt")[num].style.display = "none";
             }
@@ -189,32 +189,37 @@
                     <label for="floatingInput">To Do</label>
                     <button type="button" class="btn btn-primary">추가</button>
                 </div>
-            <div class="panel-body">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <strong class="list-group-item-context">닫기 버튼만들기기기기기기기기기기기</strong>
-                        <div class="list-group-item-bts">
-                            <button type="button" class="btn btn-info">수정</button>
-                            <button type="button" class="btn btn-danger ml-1">삭제</button>
-                        </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong class="list-group-item-context">닫기 버튼만들기기기기기기기기기기기</strong>
+                            <div class="list-group-item-bts">
+                                <button type="button" class="btn btn-info">수정</button>
+                                <button type="button" class="btn btn-danger ml-1">삭제</button>
+                            </div>
 
-                    </li>
-                    <li class="list-group-item">
-                        <strong>DB 연결하기</strong>
-                        <button type="button" class="btn btn-danger ml-2">삭제</button>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>버튼만들기</strong>
-                        <button type="button" class="btn btn-danger ml-2">삭제</button>
-                    </li>
-                    <li class="list-group-item">
-                        <strong>버튼만들기</strong>
-                        <button type="button" class="btn btn-danger ml-2">삭제</button>
-                    </li>
-                </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>DB 연결하기</strong>
+                            <button type="button" class="btn btn-danger ml-2">삭제</button>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>버튼만들기</strong>
+                            <button type="button" class="btn btn-danger ml-2">삭제</button>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>버튼만들기</strong>
+                            <button type="button" class="btn btn-danger ml-2">삭제</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-floating">
+                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" onkeydown="resize(this)"></textarea>
+                  <label for="floatingTextarea">내용</label>
+                </div>
             </div>
-            <div class="write-body"><p>And here is all its contents.</p>
-                <a class="js-close">Close</a>
+            <div class="write-footer">
+                <a class="js-close">닫기</a>
             </div>
         </div>
     </div>
