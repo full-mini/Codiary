@@ -28,10 +28,18 @@
 
     <script>
 
-        window.onload=function(){
-          //실행할 내용
-            var open = false;
-        }
+        var open_note = false;
+        var writing = false;
+        var array_todo = [];
+        var array_num = 0;
+
+        $(document).ready(function () {
+            $('#todo-input').keydown(function (key) {
+                if (key.keyCode == 13) {
+                    add_todo()
+                }
+            });
+        });
 
         //게시물 저장 서버에 보내기!
         //id, 제목, 내용 보내기
@@ -63,13 +71,13 @@
 
         function more_context(num) {
             if(document.getElementsByClassName("more_bt")[num].style.display=='block') {
-                if(open>=0){
-                    document.getElementsByClassName("card-text")[open].style.height = "72px";
-                    document.getElementsByClassName("card-text")[open].style.display = "-webkit-box";
-                    document.getElementsByClassName("more_bt")[open].style.display="block";
-                    document.getElementsByClassName("hide_bt")[open].style.display="none";
-                    document.getElementsByClassName("edit_bt")[open].style.display = "none";
-                    document.getElementsByClassName("del_bt")[open].style.display = "none";
+                if(typeof open_note =="number"){
+                    document.getElementsByClassName("card-text")[open_note].style.height = "72px";
+                    document.getElementsByClassName("card-text")[open_note].style.display = "-webkit-box";
+                    document.getElementsByClassName("more_bt")[open_note].style.display="block";
+                    document.getElementsByClassName("hide_bt")[open_note].style.display="none";
+                    document.getElementsByClassName("edit_bt")[open_note].style.display = "none";
+                    document.getElementsByClassName("del_bt")[open_note].style.display = "none";
                 }
                 document.getElementsByClassName("card-text")[num].style.height = "100%";
                 document.getElementsByClassName("card-text")[num].style.display = "block";
@@ -77,7 +85,7 @@
                 document.getElementsByClassName("hide_bt")[num].style.display = "block";
                 document.getElementsByClassName("edit_bt")[num].style.display = "block";
                 document.getElementsByClassName("del_bt")[num].style.display = "block";
-                open=num;
+                open_note=num;
             } else {
                 document.getElementsByClassName("card-text")[num].style.height = "72px";
                 document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
@@ -87,6 +95,39 @@
                 document.getElementsByClassName("del_bt")[num].style.display = "none";
             }
         }
+
+        function delet_todo(num){
+/*              array에서 삭제한다.
+                전체를 비운다.
+                for문으로 다시 작성한다.
+*/
+        }
+
+        function add_todo() {
+            let todo_text = ($('#todo-input').val()).trim()
+
+            if (todo_text != "") {
+                let temp_html = `<li class="list-group-item">
+                                    <strong class="list-group-item-context">${todo_text}</strong>
+
+                                    <div class="list-group-item-bts">
+                                        <button type="button" class="btn btn-danger" onclick="delet_todo(${array_num})">삭제</button>
+                                    </div>
+
+                                </li>`
+                $.ajax({
+
+                });
+                array_todo.push(todo_text)
+                array_num+=1
+                console.log(array_num,array_todo)
+                $('#todo-input').val('');
+                $('#list-group').append(temp_html);
+                alert("To-do 리스트에 추가 되었습니다.")
+                $('#todo-input').focus();
+            }
+        }
+
 
 
     </script>
@@ -177,49 +218,33 @@
     <div class="write-area">
         <div class="d-grid gap-2 add_note js-click"><button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button></div>
         <div class="write-modal">
-            <div class="write-nav">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="title" placeholder="title">
-                    <label for="floatingInput">제목</label>
-                </div>
-            </div>
-            <div class="write-body">
-                <div class="todo-area form-floating mb-3">
-                    <input type="email" class="todo-input form-control" id="todo-input" placeholder="todo">
-                    <label for="floatingInput">To Do</label>
-                    <button type="button" class="btn btn-primary">추가</button>
-                </div>
-                <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <strong class="list-group-item-context">닫기 버튼만들기기기기기기기기기기기</strong>
+            <div>
+                <div class="write-nav">
+                    <div class="todo-area form-floating mb-3">
+                        <input type="text" class="todo-input form-control" id="todo-input" style="ime-mode:active;">
+                        <label for="todo-input">오늘 할 일을 기록해주세요!</label>
+                        <button type="button" class="btn btn-primary" onclick="add_todo()">추가</button>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group" id="list-group">
 
-                            <div class="list-group-item-bts">
-                                <button type="button" class="btn btn-danger ml-1">삭제</button>
-                            </div>
-
-                        </li>
-                        <li class="list-group-item">
-                            <strong>DB 연결하기</strong>
-                            <button type="button" class="btn btn-danger ml-2">삭제</button>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>버튼만들기</strong>
-                            <button type="button" class="btn btn-danger ml-2">삭제</button>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>버튼만들기</strong>
-                            <button type="button" class="btn btn-danger ml-2">삭제</button>
-                        </li>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-                <div class="form-floating">
-                  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" onkeydown="resize(this)"></textarea>
-                  <label for="floatingTextarea">내용</label>
+                <div class="write-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="context-title" placeholder="title">
+                        <label for="context-title">제목</label>
+                    </div>
+                    <div class="form-floating">
+                          <textarea class="form-control" id="context-main" onkeydown="resize(this)"></textarea>
+                          <label for="context-main">내용</label>
+                    </div>
                 </div>
             </div>
             <div class="write-footer">
-                <a class="js-close">닫기</a>
+                <div class="write-complete"><button type="button" class="btn btn-success">작성하기</button></div>
+                <div class="js-close"><button type="button" class="btn btn-danger">닫기</button></div>
             </div>
         </div>
     </div>
@@ -233,13 +258,37 @@
         <!-- 모달창: 열기 / 닫기 버튼 -->
         $('.js-click').click(function(){
           $('.write-area').addClass('modal-open');
-          $("body").css('position','fixed');
+          $("html").css('overflow-y','hidden');
+          $("write-footer").css('position','fixed');
+
+          writing = true;
         });
 
         $('.js-close').click(function(){
-          $('.write-area').removeClass('modal-open');
-          $("body").css('position','relative');
+          if ($('#context-title').val() != '' || $('#context-main').val() != '' || array_todo.length != 0) {
+              if (confirm("작성중이던 내용이 있습니다. 그래도 닫으시겠습니까?")) {
+                  $('.write-area').removeClass('modal-open');
+                  $("html").css('overflow-y', 'auto');
+                  $("write-footer").css('position', '');
+                  $('#context-title').val('');
+                  $('#todo-input').val('');
+                  $('#context-main').val('');
+                    const todo_parent = document.querySelector(".list-group");
+                    array_todo = [];
+                    array_num = 0;
+                    while (todo_parent.hasChildNodes()) {	// 부모노드가 자식이 있는지 여부를 알아낸다
+                      todo_parent.removeChild(todo_parent.firstChild);
+                    }
+                  writing=false;
+              }
+          } else {
+            $('.write-area').removeClass('modal-open');
+            $("html").css('overflow-y', 'auto');
+            $("write-footer").css('position', '');
+            writing=false;
+          }
         });
+
         <!-- 모달창:내용 높이 제한 계산 -->
 /*
         $(document).ready(function () {
