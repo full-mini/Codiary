@@ -1,12 +1,12 @@
-body{
+body {
     margin: 0px;
     position: relative;
 }
 
-nav{
-    height:150px;
-    background-color:black;
-    color:white;
+nav {
+    height: 150px;
+    background-color: black;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -15,31 +15,31 @@ nav{
 }
 
 
-main{
+main {
     width: 100%;
     margin-bottom: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    position:relative;
+    position: relative;
 }
 
-.note-top-day{
+.note-top-day {
     width: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.note-top-title{
+.note-top-title {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
 }
 
-.note-bottom{
+.note-bottom {
     height: 40%;
     width: 100%;
     display: flex;
@@ -47,25 +47,25 @@ main{
     justify-content: space-between;
 }
 
-.card-text{
+.card-text {
     max-height: none;
     white-space: normal;
     display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     min-height: 72px;
     height: 72px;
     width: 100%;
-    overflow:hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.note-button{
+.note-button {
     display: flex;
     justify-content: flex-end;
 }
 
-footer{
+footer {
     height: 40px;
     display: flex;
     justify-content: flex-end;
@@ -80,7 +80,7 @@ footer{
 }
 
 .add_note {
-    position:fixed;
+    position: fixed;
     left: 0px;
     bottom: 0px;
     right: 0px;
@@ -88,12 +88,12 @@ footer{
 
 .add_note > button {
     background-color: #0d6efd;
-    color:white;
+    color: white;
     font-size: 1rem;
 }
 
-.add_note > button{
-    border-radius:0;
+.add_note > button {
+    border-radius: 0;
 }
 
 .write-modal {
@@ -127,30 +127,33 @@ footer{
     align-items: center;
 }
 
-.todo-area>input{
+.todo-area > input {
     /*max-width: 100%;*/
 }
 
-.todo-area>button{
+.todo-area > button {
     width: 100px;
     height: 58px;
     padding: 1em;
 }
 
-.list-group{
-
+.list-group {
     margin-bottom: 10px;
     -webkit-overflow-scrolling: touch;
 }
 
-.list-group-item{
+.list-group-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.list-group-item-bts{
+.list-group-item-context{
+    word-break:break-all;
+}
+
+.list-group-item-bts {
     min-width: 60px;
     display: flex;
     flex-direction: row;
@@ -168,48 +171,50 @@ footer{
     line-height: 1.6;
 }
 
-.form-control{
+.form-control {
     height: 100%;
 }
 
-.write-modal{
+.write-modal {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .write-area.modal-open .write-modal {
-  top: 0;
+    top: 0;
 }
 
-.write-footer{
-    display:flex;
+.write-footer {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
     bottom: 0;
-    left:0;
+    left: 0;
     right: 0;
 }
 
-.write-complete{
+.write-complete {
     width: 50%;
 }
 
-.js-close{
+.js-close {
     width: 50%;
 }
 
-.write-footer button{
+.write-footer button {
     border-radius: 0;
     height: 2rem;
     width: 100%;
 }
 
 
-
-@media screen and (max-width:48rem){
-  .btn{
-    font-size:0.5rem ;
-  }
+@media screen and (max-width: 30rem) {
+    .btn {
+        font-size: 0.9rem;
+    }
+    .todo-area label {
+        font-size: 0.7rem;
+    }
 }
