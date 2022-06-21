@@ -40,6 +40,13 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
     <script>
+
+    function sharetwitter() {
+        let sendUrl = "naver.com";
+        let sendText = "공유 테스트"
+        window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+    }
+
         function save_comment() {
             let title = $('#title').val()
             let comment = $('#comment').val()
@@ -80,6 +87,12 @@
                 window.location.reload()
             }
             //공유하기
+        function sharetwitter() {
+
+            }
+
+
+
             const btnShareTw = document.querySelector('#shareTw');
 
             btnShareTw.addEventListener('click', () => {
@@ -111,7 +124,7 @@
 </nav>
 <main>
     <div class="main-box">
-        <div class="share_btn"><button type="button" id="shareTw" class="btn_comm">트위터로 공유하기</button>
+        <div class="share_btn"><button type="button" onclick="sharetwitter()" class="btn_comm">트위터로 공유하기</button>
             <button type="button" id="shareFb" class="btn_comm">페이스북으로 공유하기</button>
             <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
             <div class="search-box d-flex justify-content-center">
