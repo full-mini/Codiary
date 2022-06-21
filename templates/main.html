@@ -36,7 +36,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
             crossorigin="anonymous"></script>
-   <script integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
     <script>
         function save_comment() {
@@ -78,57 +79,27 @@
                 $(`#word-${word}`)[0].scrollIntoView();
                 window.location.reload()
             }
-        }
+            //공유하기
+            const btnShareTw = document.querySelector('#shareTw');
 
-        function snsShare(title, url){
-            if(navigator.share){/*web share api*/
-                navigator.share({
-                    title: ' [##_article_rep_title_##]', /* 글 제목*/
-                    text: ' [##_article_rep_desc_##]', /* 글 요약*/
-                    url: '[##_article_rep_link_##]', /* 글의 url*/
-                });
-                $().ready(function () {
-                    $("#itcidershared").click(function () {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'center-center',
-                            showConfirmButton: false,
-                            timer: 3000, /* 3초 동안 로드*/
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                            if (typeof navigator.share === "undefined")
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: '공유 완료되었습니다'/*공유 성공시 나오는 말*/
-                        })
-                    });
-                });
-            }else
+            btnShareTw.addEventListener('click', () => {
+                const sendText = '철도로 1시간 이내면 닿는다.. 덩치 키우는 서울';
+                const pageUrl = 'news.v.daum.net/v/20220319120213003';
+                window.open(`https://twitter.com/intent/tweet?text=${sendText}&url=${pageUrl}`);
+            })
+            const btnShareFb = document.querySelector('#shareFb');
 
-                $().ready(function () {
-                    $("#itcidershared").click(function () {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'center-center',
-                            showConfirmButton: false,
-                            timer: 2500, /*2.5초 로드*/
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.addEventListener('mouseenter', Swal.stopTimer)
-                                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                            }
-                        })
-                        Toast.fire({
-                            icon: 'error',
-                            title: '미지원 브라우저'/*미지원 브라우저나 공유 실패*/
+            btnShareFb.addEventListener('click', () => {
+                const pageUrl = 'news.v.daum.net/v/20220319120213003';
+                window.open(`http://www.facebook.com/sharer/sharer.php?u=${pageUrl}`);
+            })
+            // 사용할 앱의 JavaScript 키 설정
+            Kakao.init('7daa7d5fef046cea4ec3b64870f2c4d3');
 
-                        })
-                    });
-                });
+            Kakao.Link.createCustomButton({
+                container: '#shareKt',
+                templateId: 78517, // 나의 앱 ID 작성
+            });
         }
 
     </script>
@@ -137,75 +108,74 @@
 <nav>
     <h1> {{nickname}}님의 CODIARY</h1>
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
-            <a class="itcidersharesns" type="button" onclick="snsShare('title','url')" alt="web share api" id ="itcidershared">
-            <span class="material-symbols-outlined">share</span>
-        </a>
-
 </nav>
 <main>
     <div class="main-box">
-        <div class="search-box d-flex justify-content-center">
-            <input id="input-word" class="form-control" style="margin-right: 0.5rem">
-            <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+        <div class="share_btn"><button type="button" id="shareTw" class="btn_comm">트위터로 공유하기</button>
+            <button type="button" id="shareFb" class="btn_comm">페이스북으로 공유하기</button>
+            <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
+            <div class="search-box d-flex justify-content-center">
+                <input id="input-word" class="form-control" style="margin-right: 0.5rem">
+                <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button></div>
 
-        <div class="card border-dark mb-3">
-            <div class="card-header">
-                <div class="note-top-day ml-2">Day 02</div>
-                <div class="note-top-title ml-2">
-                    <div>22.6.21 PM 18:30</div>
-                    <div>나는 제목이다</div>
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <div class="note-top-day ml-2">Day 02</div>
+                    <div class="note-top-title ml-2">
+                        <div>22.6.21 PM 18:30</div>
+                        <div>나는 제목이다</div>
+                    </div>
+                </div>
+                <div class="card-body text-dark note-bottom">
+                    <p class="card-text ml-3 pr-5">
+                        동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+                    </p>
+                    <div class="note-button ml-3 mt-2" >
+                        <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                    </div>
                 </div>
             </div>
-            <div class="card-body text-dark note-bottom">
-                <p class="card-text ml-3 pr-5">
-                    동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
-                    대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
-                    대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-                </p>
-                <div class="note-button ml-3 mt-2" >
-                    <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <div class="note-top-day ml-2">Day 02</div>
+                    <div class="note-top-title ml-2">
+                        <div>22.6.21 PM 18:30</div>
+                        <div>나는 제목이다</div>
+                    </div>
+                </div>
+                <div class="card-body text-dark note-bottom">
+                    <p class="card-text ml-3 pr-5">
+                        동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+                    </p>
+                    <div class="note-button ml-3 mt-2" >
+                        <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <div class="note-top-day ml-2">Day 02</div>
+                    <div class="note-top-title ml-2">
+                        <div>22.6.21 PM 18:30</div>
+                        <div>나는 제목이다</div>
+                    </div>
+                </div>
+                <div class="card-body text-dark note-bottom">
+                    <p class="card-text ml-3 pr-5">
+                        동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+                    </p>
+                    <div class="note-button ml-3 mt-2" >
+                        <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card border-dark mb-3">
-            <div class="card-header">
-                <div class="note-top-day ml-2">Day 02</div>
-                <div class="note-top-title ml-2">
-                    <div>22.6.21 PM 18:30</div>
-                    <div>나는 제목이다</div>
-                </div>
-            </div>
-            <div class="card-body text-dark note-bottom">
-                <p class="card-text ml-3 pr-5">
-                    동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
-                    대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
-                    대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-                </p>
-                <div class="note-button ml-3 mt-2" >
-                    <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
-                </div>
-            </div>
-        </div>
-        <div class="card border-dark mb-3">
-            <div class="card-header">
-                <div class="note-top-day ml-2">Day 02</div>
-                <div class="note-top-title ml-2">
-                    <div>22.6.21 PM 18:30</div>
-                    <div>나는 제목이다</div>
-                </div>
-            </div>
-            <div class="card-body text-dark note-bottom">
-                <p class="card-text ml-3 pr-5">
-                    동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
-                    대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
-                    대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-                </p>
-                <div class="note-button ml-3 mt-2" >
-                    <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 
 <footer>
