@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://runedemonic:yh03181364@cluster0.ezz8n.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://test:sparta@cluster0.ezz8n.mongodb.net/?retryWrites=true&w=majority")
 db = client.dbsparta
 
 # JWT 토큰을 만들 때 필요한 비밀문자열입니다. 아무거나 입력해도 괜찮습니다.
@@ -39,9 +39,6 @@ def home():
 
 
 
-
-
-
 # 클라이언트에서 내용 받기(아이디, 제목, 내용)
 # DB에 저장(title, comment, ID)
 @app.route('/upload', methods = ["POST"])
@@ -71,7 +68,6 @@ def main():
     # DB에서 저장된 단어 찾아서 HTML에 나타내기
     word = list(db.words.find({}, {"_id": False}))
     return render_template("main.html", words=word)
-
 
 @app.route('/mainprac')
 def mainprac():

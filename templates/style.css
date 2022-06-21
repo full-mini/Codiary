@@ -73,6 +73,7 @@ header{
         }
 
 .main-box{
+    width: 800px;
     padding: 10px;
     display: flex;
     flex-direction: column;
