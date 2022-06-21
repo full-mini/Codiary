@@ -31,7 +31,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"id": payload['id']})
-        return render_template('main.html', nickname=user_info["nick"])
+        return render_template('main.html', data=user_info)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -44,9 +44,11 @@ def home():
 def upload():
     title_receive = request.form['title_give']
     comment_receive = request.form['comment_give']
+    id_receive = request.form['id_give']
     doc={
         'title': title_receive,
-        'comment': comment_receive
+        'comment': comment_receive,
+        'id':id_receive
     }
     db.thread.insert_one(doc)
     
@@ -64,7 +66,15 @@ def register():
 
 @app.route('/cordiary')
 def main():
-    return render_template('main.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.user.find_one({"id": payload['id']})
+        return render_template('main.html', data={"nick":user_info["nick"],"id":user_info["id"]})
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 #DB에서 정보 받아오기 (ID, 제목, 내용, 시간, 날짜)
 
 @app.route('/mainprac')
@@ -113,9 +123,10 @@ def api_login():
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        print(payload,token)
 
         # token을 줍니다.
         return jsonify({'result': 'success', 'token': token})
@@ -140,7 +151,6 @@ def api_valid():
         # 보실 수 있도록 payload를 print 해두었습니다. 우리가 로그인 시 넣은 그 payload와 같은 것이 나옵니다.
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         print(payload)
-
         # payload 안에 id가 들어있습니다. 이 id로 유저정보를 찾습니다.
         # 여기에선 그 예로 닉네임을 보내주겠습니다.
         userinfo = db.user.find_one({'id': payload['id']}, {'_id': 0})
