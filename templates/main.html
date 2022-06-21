@@ -17,27 +17,31 @@
 
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <!-- JS -->
+
+    <!--<link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">-->
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="https://kit.fontawesome.com/b47588dd55.js" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <!-- JS -->
 
     <script>
-        let id_data = {{ data.id|tojson }}
+
+        window.onload=function(){
+          //실행할 내용
+            var open = false;
+        }
 
         //게시물 저장 서버에 보내기!
         //id, 제목, 내용 보내기
         function save_comment() {
             let title = $('#title').val()
             let comment = $('#comment').val()
-            let id = id_data
-
             $.ajax({
                 type: 'POST',
                 url: '/upload',
-                data: {title_give: title, comment_give: comment, id_give: id},
+                data: {title_give: title, comment_give: comment},
                 success: function (response) {
                     console.log(response)
                     alert(response['msg'])
@@ -89,7 +93,7 @@
 </head>
 <body>
 <nav>
-    <h1> {{ data.nick }} 님의 CODIARY12</h1>
+    <h1> {{nickname}} 님의 CODIARY12</h1>
     <!-- 로그아웃 버튼 -->
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
@@ -107,107 +111,155 @@
             </div>
         </div>
         <div class="card-body text-dark note-bottom">
-            <p class="card-text ml-3 pr-5">
-            </p>
-            <div class="note-button ml-3 mt-2">
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i>
-                    더보기
-                </button>
+            <!-- 노트 내용이 들어가는 부분 -->
+            <div class="card-text ml-3 pr-5">
+                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세  삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
             </div>
-          </div>
+            <!-- 노트 버튼 (수정/삭제/감추기/더보기) -->
+            <div class="note-button ml-3 mt-2" >
+                <button type="button" class="edit_bt btn btn-primary ml-1" style="display:none"><i class="fa-solid fa-pen"></i> 수정</button>
+                <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i class="fa-solid fa-trash-can"></i> 삭제</button>
+                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(0)" style="display:block" ><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(0)" style="display:none" ><i class="fa-solid fa-caret-up"></i> 감추기</button>
+            </div>
         </div>
+    </div>
 
 
     <div class="card border-dark mb-3" style="width:65rem;">
-        <div class="card-header">
-            <div class="note-top-day ml-2">Day 02</div>
-            <div class="note-top-title ml-2">
-                <div>22.6.21 PM 18:30</div>
-                <div>나는 제목이다</div>
-            </div>
-          </div>
-          <div class="card-body text-dark note-bottom">
-            <p class="card-text ml-3 pr-5">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-            </p>
-            <div class="note-button ml-3 mt-2" >
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card border-dark mb-3" style="width:65rem;">
           <div class="card-header">
             <div class="note-top-day ml-2">Day 02</div>
             <div class="note-top-title ml-2">
                 <div>22.6.21 PM 18:30</div>
                 <div>나는 제목이다</div>
             </div>
-          </div>
-          <div class="card-body text-dark note-bottom">
-            <p class="card-text ml-3 pr-5">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-            </p>
+        </div>
+        <div class="card-body text-dark note-bottom">
+            <div class="card-text ml-3 pr-5">
+                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세  삼천리 화려 강산대한 사람 대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
+            </div>
             <div class="note-button ml-3 mt-2" >
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                <button type="button" class="edit_bt btn btn-primary ml-1" style="display:none"><i class="fa-solid fa-pen"></i> 수정</button>
+                <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i class="fa-solid fa-trash-can"></i> 삭제</button>
+                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(1)" style="display:block" ><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(1)" style="display:none" ><i class="fa-solid fa-caret-up"></i> 감추기</button>
             </div>
-          </div>
-        </div>
-
-    </main>
-
-    <footer>
-        <!-- 게시물 쓰기 버튼, 클릭시 모달 창 띄움 -->
-        <div class="add_note"><button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button></div>
-    </footer>
-
-<!-- 모달 창 설정 -->
-<div id="modal" class="modal-overlay">
-    <div class="modal-window">
-        <div class="title">
-            <h2>글 작성</h2>
-        </div>
-        <div class="close-area">X</div>
-        <div class="mypost">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="title" placeholder="url">
-                <label for="floatingInput">제목</label>
-            </div>
-            <div class="form-floating">
-
-<textarea class="form-control" placeholder="Leave a comment here" id="comment"
-          style="height: 100px"></textarea>
-                <label for="floatingTextarea2">내용</label>
-            </div>
-            <!-- 기록버튼 -->
-            <button onclick="save_comment()" type="button" class="btn btn-dark"> 기록하기 </button>
         </div>
     </div>
-</div>
 
-<script>
-    const modal = document.getElementById("modal")
+    <div class="card border-dark mb-3" style="width:65rem;">
+          <div class="card-header">
+            <div class="note-top-day ml-2">Day 02</div>
+            <div class="note-top-title ml-2">
+                <div>22.6.21 PM 18:30</div>
+                <div>나는 제목이다</div>
+            </div>
+        </div>
+        <div class="card-body text-dark note-bottom">
+            <div class="card-text ml-3 pr-5">
+                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.
+            </div>
 
-    //ESC 버튼을 누르면 모달창이 꺼지게 하기
-    window.addEventListener("keyup", e => {
-        if (modal.style.display === "flex" && e.key === "Escape") {
-            modal.style.display = "none"
+            <div class="note-button ml-3 mt-2" >
+                <button type="button" class="edit_bt btn btn-primary ml-1" style="display:none"><i class="fa-solid fa-pen"></i> 수정</button>
+                <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i class="fa-solid fa-trash-can"></i> 삭제</button>
+                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(2)" style="display:block" ><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(2)" style="display:none" ><i class="fa-solid fa-caret-up"></i> 감추기</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <!-- 게시물 쓰기 버튼, 클릭시 모달 창 띄움 -->
+    <!-- 모달 창 설정 -->
+    <div class="write-area">
+        <div class="d-grid gap-2 add_note js-click"><button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button></div>
+        <div class="write-modal">
+            <div class="write-nav">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="title" placeholder="title">
+                    <label for="floatingInput">제목</label>
+                </div>
+            </div>
+            <div class="write-body">
+                <div class="todo-area form-floating mb-3">
+                    <input type="email" class="todo-input form-control" id="todo-input" placeholder="todo">
+                    <label for="floatingInput">To Do</label>
+                    <button type="button" class="btn btn-primary">추가</button>
+                </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong class="list-group-item-context">닫기 버튼만들기기기기기기기기기기기</strong>
+                        <div class="list-group-item-bts">
+                            <button type="button" class="btn btn-info">수정</button>
+                            <button type="button" class="btn btn-danger ml-1">삭제</button>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item">
+                        <strong>DB 연결하기</strong>
+                        <button type="button" class="btn btn-danger ml-2">삭제</button>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>버튼만들기</strong>
+                        <button type="button" class="btn btn-danger ml-2">삭제</button>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>버튼만들기</strong>
+                        <button type="button" class="btn btn-danger ml-2">삭제</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="write-body"><p>And here is all its contents.</p>
+                <a class="js-close">Close</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function resize(obj) {
+            obj.style.height = "1px";
+          obj.style.height = (12 + obj.scrollHeight) + "px";
         }
-    })
 
-    //클로즈(x) 버튼을 누르면 모달창이 꺼지게 하기
-    const closeBtn = modal.querySelector(".close-area")
-    closeBtn.addEventListener("click", e => {
-        modal.style.display = "none"
-    })
+        <!-- 모달창:내용 높이 제한 계산 -->
+/*
+        $(document).ready(function () {
+            $('.write-body').on('keyup', 'textarea', function (e) {
+                if (window.innerWidth <= window.innerHeight) {
+                    // Portrait 모드일 때 실행할 스크립트
+                    height_rate = 0.7;
+                } else {
+                    // Landscape 모드일 때 실행할 스크립트
+                    height_rate = 0.4;
+                }
+                $(this).css('height', 'auto');
+                $(this).height(this.scrollHeight);
+                $(".comment-area").css('max-height', $( ".write-modal" ).height() * height_rate);
+                if($('.comment-area').height()> $( ".write-modal" ).height() * height_rate){
+                    $(".comment-area").css('height', $( ".write-modal" ).height() * height_rate);
+                }
+                console.log($( ".write-modal" ).height() * height_rate)
+            });
+            $('.write-body').find('textarea').keyup();
+        });
+*/
+        <!-- 모달창: 열기 / 닫기 버튼 -->
+        $('.js-click').click(function(){
+          $('.write-area').addClass('modal-open');
+          $("body").css('position','fixed');
+        });
 
-    //버튼을 누르면 모달창이 켜지게 하기
-    const btnModal = document.getElementById("btn-modal")
-    btnModal.addEventListener("click", e => {
-        modal.style.display = "flex"
-    })
+        $('.js-close').click(function(){
+          $('.write-area').removeClass('modal-open');
+          $("body").css('position','relative');
+        });
+    </script>
 
-</script>
+</footer>
 
 </body>
 </html>
