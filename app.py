@@ -42,13 +42,22 @@ def home():
 # DB에 저장(title, comment, ID)
 @app.route('/upload', methods = ["POST"])
 def upload():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    print(payload)
+    comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
+
     title_receive = request.form['title_give']
     comment_receive = request.form['comment_give']
     id_receive = request.form['id_give']
+    date_receive = request.form['date_give']
+    count=len(comment_list)+1
     doc={
         'title': title_receive,
         'comment': comment_receive,
-        'id':id_receive
+        'id':id_receive,
+        'date:':date_receive,
+        'count':count
     }
     db.thread.insert_one(doc)
     
@@ -75,7 +84,18 @@ def main():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+
+
+
 #DB에서 정보 받아오기 (ID, 제목, 내용, 시간, 날짜)
+@app.route("/getcomment", methods=["GET"])
+def comment_get():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    print(payload)
+    comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
+    return jsonify({'comments':comment_list})
+
 
 @app.route('/mainprac')
 def mainprac():
@@ -126,7 +146,6 @@ def api_login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        print(payload,token)
 
         # token을 줍니다.
         return jsonify({'result': 'success', 'token': token})
