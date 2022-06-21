@@ -1,5 +1,6 @@
 body{
     margin: 0px;
+    position: relative;
 }
 
 nav{
@@ -15,8 +16,8 @@ nav{
 
 
 main{
-    padding-top: 10px;
-    padding-bottom: 20px;
+    width: 100%;
+    margin-bottom: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -50,11 +51,11 @@ main{
     max-height: none;
     white-space: normal;
     display: -webkit-box;
-        -webkit-line-clamp: 3 ;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
     min-height: 72px;
     height: 72px;
-    width:100%;
+    width: 100%;
     overflow:hidden;
     text-overflow: ellipsis;
 }
@@ -158,6 +159,7 @@ footer{
 }
 
 .write-body textarea {
+    min-height: 150px;
     width: 100%;
     resize: none;
     overflow-y: hidden; /* prevents scroll bar flash */
