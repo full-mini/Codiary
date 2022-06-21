@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://runedemonic:yh03181364@cluster0.ezz8n.mongodb.net/?retryWrites=true&w=majority")
+client = MongoClient("mongodb+srv://test:sparta@cluster0.ezz8n.mongodb.net/?retryWrites=true&w=majority")
 db = client.dbsparta
 
 # JWT 토큰을 만들 때 필요한 비밀문자열입니다. 아무거나 입력해도 괜찮습니다.
@@ -31,33 +31,21 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.user.find_one({"id": payload['id']})
-        return render_template('main.html', data=user_info)
+        return render_template('main.html', nickname=user_info["nick"])
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
-
-# 클라이언트에서 내용 받기(아이디, 제목, 내용, 카운트(중복 내용 처리))
+# 클라이언트에서 내용 받기(아이디, 제목, 내용)
 # DB에 저장(title, comment, ID)
 @app.route('/upload', methods = ["POST"])
 def upload():
-    token_receive = request.cookies.get('mytoken')
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    print(payload)
-    comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
-
     title_receive = request.form['title_give']
     comment_receive = request.form['comment_give']
-    id_receive = request.form['id_give']
-    date_receive = request.form['date_give']
-    count=len(comment_list)+1
     doc={
         'title': title_receive,
-        'comment': comment_receive,
-        'id':id_receive,
-        'date:':date_receive,
-        'count':count
+        'comment': comment_receive
     }
     db.thread.insert_one(doc)
     
@@ -75,27 +63,9 @@ def register():
 
 @app.route('/cordiary')
 def main():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"id": payload['id']})
-        return render_template('main.html', data={"nick":user_info["nick"],"id":user_info["id"]})
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-
-
-#DB에서 정보 받아오기 (ID, 제목, 내용, 시간, 날짜)
-@app.route("/getcomment", methods=["GET"])
-def comment_get():
-    token_receive = request.cookies.get('mytoken')
-    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    print(payload)
-    comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
-    return jsonify({'comments':comment_list})
-
+    # DB에서 저장된 단어 찾아서 HTML에 나타내기
+    word = list(db.words.find({}, {"_id": False}))
+    return render_template("main.html", words=word)
 
 @app.route('/mainprac')
 def mainprac():
@@ -143,7 +113,7 @@ def api_login():
         # exp에는 만료시간을 넣어줍니다. 만료시간이 지나면, 시크릿키로 토큰을 풀 때 만료되었다고 에러가 납니다.
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
@@ -170,6 +140,7 @@ def api_valid():
         # 보실 수 있도록 payload를 print 해두었습니다. 우리가 로그인 시 넣은 그 payload와 같은 것이 나옵니다.
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         print(payload)
+
         # payload 안에 id가 들어있습니다. 이 id로 유저정보를 찾습니다.
         # 여기에선 그 예로 닉네임을 보내주겠습니다.
         userinfo = db.user.find_one({'id': payload['id']}, {'_id': 0})

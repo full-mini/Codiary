@@ -2,7 +2,7 @@ body{
     margin: 0px;
 }
 
-nav{
+header{
     height:150px;
     background-color:black;
     color:white;
@@ -14,8 +14,9 @@ nav{
 }
 
 
-main{
-    padding-top: 10px;
+.main-box{
+    width: 800px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -118,4 +119,33 @@ footer{
 
 .write-area.modal-open .write-modal {
   top: 0;
+}
+
+        .main-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 95%;
+            max-width: 500px;
+            padding: 20px;
+            margin: auto;
+        }
+        .search-box { width: 70%;
+            margin: 50px auto;
+            max-width: 700px;
+}
+        tr.highlight > td { background-color: #0c5e81;
+            color: white;
+}
+tr.highlight a { color: white;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
 }
