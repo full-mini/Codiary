@@ -189,3 +189,12 @@ footer{
             margin: auto;
             display: block;
         }
+        .search-box { width: 70%;
+            margin: 50px auto;
+            max-width: 700px;
+}
+        tr.highlight > td { background-color: #0c5e81;
+color: white;
+}
+tr.highlight a { color: white;
+}
