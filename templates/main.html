@@ -27,62 +27,78 @@
     <script>
         let id_data = {{ data.id|tojson }}
 
-        //게시물 저장 서버에 보내기!
-        //id, 제목, 내용 보내기
-        function save_comment() {
-            let title = $('#title').val()
-            let comment = $('#comment').val()
-            let id = id_data
 
-            $.ajax({
-                type: 'POST',
-                url: '/upload',
-                data: {title_give: title, comment_give: comment, id_give: id},
-                success: function (response) {
-                    console.log(response)
-                    alert(response['msg'])
-                    window.location.reload()
-                }
-            })
-        }
-
-
-        // 서버에서 정보 받아오기
-        //아이디, 제목, 내용, 시간, 카운트!E
-
-        // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
-        function logout() {
-            $.removeCookie('mytoken');
-            alert('로그아웃!')
-            window.location.href = '/login'
-        }
-
-        function more_context(num) {
-            if(document.getElementsByClassName("more_bt")[num].style.display=='block') {
-                if(open>=0){
-                    document.getElementsByClassName("card-text")[open].style.height = "72px";
-                    document.getElementsByClassName("card-text")[open].style.display = "-webkit-box";
-                    document.getElementsByClassName("more_bt")[open].style.display="block";
-                    document.getElementsByClassName("hide_bt")[open].style.display="none";
-                    document.getElementsByClassName("edit_bt")[open].style.display = "none";
-                    document.getElementsByClassName("del_bt")[open].style.display = "none";
-                }
-                document.getElementsByClassName("card-text")[num].style.height = "100%";
-                document.getElementsByClassName("card-text")[num].style.display = "block";
-                document.getElementsByClassName("more_bt")[num].style.display = "none";
-                document.getElementsByClassName("hide_bt")[num].style.display = "block";
-                document.getElementsByClassName("edit_bt")[num].style.display = "block";
-                document.getElementsByClassName("del_bt")[num].style.display = "block";
-                open=num;
-            } else {
-                document.getElementsByClassName("card-text")[num].style.height = "72px";
-                document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
-                document.getElementsByClassName("more_bt")[num].style.display="block";
-                document.getElementsByClassName("hide_bt")[num].style.display="none";
-                document.getElementsByClassName("edit_bt")[num].style.display = "none";
-                document.getElementsByClassName("del_bt")[num].style.display = "none";
+            //한국 날짜로 변환
+            function getCurrentDate() {
+                var date = new Date();
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var today = date.getDate();
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                var milliseconds = date.getMilliseconds();
+                return new Date(Date.UTC(year, month, today, hours, minutes, seconds, milliseconds));
             }
-        }
+
+            //게시물 저장 서버에 보내기!
+            //id, 제목, 내용 보내기
+            function save_comment() {
+                let title = $('#title').val()
+                let comment = $('#comment').val()
+                let id = id_data
+                let date =
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/upload',
+                    data: {title_give: title, comment_give: comment, id_give: id},
+                    success: function (response) {
+                        console.log(response)
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                })
+            }
+
+
+
+            // 서버에서 정보 받아오기
+            //아이디, 제목, 내용, 시간, 카운트!E
+
+            // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
+            function logout() {
+                $.removeCookie('mytoken');
+                alert('로그아웃!')
+                window.location.href = '/login'
+            }
+
+            function more_context(num) {
+                if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
+                    if (open >= 0) {
+                        document.getElementsByClassName("card-text")[open].style.height = "72px";
+                        document.getElementsByClassName("card-text")[open].style.display = "-webkit-box";
+                        document.getElementsByClassName("more_bt")[open].style.display = "block";
+                        document.getElementsByClassName("hide_bt")[open].style.display = "none";
+                        document.getElementsByClassName("edit_bt")[open].style.display = "none";
+                        document.getElementsByClassName("del_bt")[open].style.display = "none";
+                    }
+                    document.getElementsByClassName("card-text")[num].style.height = "100%";
+                    document.getElementsByClassName("card-text")[num].style.display = "block";
+                    document.getElementsByClassName("more_bt")[num].style.display = "none";
+                    document.getElementsByClassName("hide_bt")[num].style.display = "block";
+                    document.getElementsByClassName("edit_bt")[num].style.display = "block";
+                    document.getElementsByClassName("del_bt")[num].style.display = "block";
+                    open = num;
+                } else {
+                    document.getElementsByClassName("card-text")[num].style.height = "72px";
+                    document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
+                    document.getElementsByClassName("more_bt")[num].style.display = "block";
+                    document.getElementsByClassName("hide_bt")[num].style.display = "none";
+                    document.getElementsByClassName("edit_bt")[num].style.display = "none";
+                    document.getElementsByClassName("del_bt")[num].style.display = "none";
+                }
+            }
 
 
     </script>
@@ -94,8 +110,8 @@
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
 <main>
-   <!-- 정렬, 공유, 검색 기능 구현 -->
-   <!-- 게시물 크롤링, 언어관련 강의 -->
+    <!-- 정렬, 공유, 검색 기능 구현 -->
+    <!-- 게시물 크롤링, 언어관련 강의 -->
     <div class="card border-dark mb-3" style="width:65rem;">
         <div class="card-header">
             <!-- 노트 상단 왼쪽 -->
@@ -114,8 +130,8 @@
                     더보기
                 </button>
             </div>
-          </div>
         </div>
+    </div>
 
 
     <div class="card border-dark mb-3" style="width:65rem;">
@@ -125,41 +141,49 @@
                 <div>22.6.21 PM 18:30</div>
                 <div>나는 제목이다</div>
             </div>
-          </div>
-          <div class="card-body text-dark note-bottom">
-            <p class="card-text ml-3 pr-5">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-            </p>
-            <div class="note-button ml-3 mt-2" >
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
-            </div>
-          </div>
         </div>
+        <div class="card-body text-dark note-bottom">
+            <p class="card-text ml-3 pr-5">
+                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리
+                기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+            </p>
+            <div class="note-button ml-3 mt-2">
+                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i>
+                    더보기
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <div class="card border-dark mb-3" style="width:65rem;">
-          <div class="card-header">
+    <div class="card border-dark mb-3" style="width:65rem;">
+        <div class="card-header">
             <div class="note-top-day ml-2">Day 02</div>
             <div class="note-top-title ml-2">
                 <div>22.6.21 PM 18:30</div>
                 <div>나는 제목이다</div>
             </div>
-          </div>
-          <div class="card-body text-dark note-bottom">
-            <p class="card-text ml-3 pr-5">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
-            </p>
-            <div class="note-button ml-3 mt-2" >
-                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
-            </div>
-          </div>
         </div>
+        <div class="card-body text-dark note-bottom">
+            <p class="card-text ml-3 pr-5">
+                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리
+                기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+            </p>
+            <div class="note-button ml-3 mt-2">
+                <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i>
+                    더보기
+                </button>
+            </div>
+        </div>
+    </div>
 
-    </main>
+</main>
 
-    <footer>
-        <!-- 게시물 쓰기 버튼, 클릭시 모달 창 띄움 -->
-        <div class="add_note"><button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button></div>
-    </footer>
+<footer>
+    <!-- 게시물 쓰기 버튼, 클릭시 모달 창 띄움 -->
+    <div class="add_note">
+        <button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button>
+    </div>
+</footer>
 
 <!-- 모달 창 설정 -->
 <div id="modal" class="modal-overlay">
@@ -180,7 +204,7 @@
                 <label for="floatingTextarea2">내용</label>
             </div>
             <!-- 기록버튼 -->
-            <button onclick="save_comment()" type="button" class="btn btn-dark"> 기록하기 </button>
+            <button onclick="save_comment()" type="button" class="btn btn-dark"> 기록하기</button>
         </div>
     </div>
 </div>
