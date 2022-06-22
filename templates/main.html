@@ -92,98 +92,115 @@
 
             return [year, month, day].join(delimiter);
         }
-    function sharetwitter() {
-        let sendUrl = "naver.com";
-        let sendText = "공유 테스트"
-        window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
-    }
+                //트위터 공유하기
 
-        $(document).ready(function () {
-            $('#todo-input').keydown(function (key) {
-                if (key.keyCode == 13) {
-                    add_todo()
-                }
-            });
-        });
-
-
-        function toStringByFormatting(source, delimiter = '-') {
-            const year = source.getFullYear();
-            const month = leftPad(source.getMonth() + 1);
-            const day = leftPad(source.getDate());
-
-            return [year, month, day].join(delimiter);
-        }
-
-        // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
-        function logout() {
-            $.removeCookie('mytoken');
-            alert('로그아웃!')
-            window.location.href = '/login'
-        }
-
-        function save_comment() {
-                let title = $('#context-title').val()
-                let comment = $('#context-main').val()
-                let id = id_data
-                let date = today
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/upload',
-                    data: {title_give: title, comment_give: comment, id_give: id, date_give: date},
-                    success: function (response) {
-                        console.log(response)
-                        alert(response['msg'])
-                        window.location.reload()
-                    }
+            function sharetwitter() {#}
+                const btnShareTw = document.querySelector('#shareTw');
+                btnShareTw.addEventListener('click', () => {
+                    let sendUrl = "naver.com";
+                    let sendText = "공유 테스트"
+                    window.open(`https://twitter.com/intent/tweet?text=${sendText}&url=${pageUrl}`);
                 })
-            }
+                //페이스북 공유하기
+                const btnShareFb = document.querySelector('#shareFb');
+
+                btnShareFb.addEventListener('click', () => {
+                    const pageUrl = 'news.v.daum.net/v/20220319120213003';
+                    window.open(`http://www.facebook.com/sharer/sharer.php?u=${pageUrl}`);
+                })
+                //카카오톡 공유하기
+                Kakao.init('7daa7d5fef046cea4ec3b64870f2c4d3');
+
+                Kakao.Link.createCustomButton({
+                    container: '#shareKt',
+                    templateId: 78517, // 나의 앱 ID 작성
+                });
+
+                $(document).ready(function () {
+                    $('#todo-input').keydown(function (key) {
+                        if (key.keyCode == 13) {
+                            add_todo()
+                        }
+                    });
+                });
 
 
-        function more_context(num) {
-            if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
-                if (typeof open_note == "number") {
-                    document.getElementsByClassName("card-text")[open_note].style.height = "72px";
-                    document.getElementsByClassName("card-text")[open_note].style.display = "-webkit-box";
-                    document.getElementsByClassName("more_bt")[open_note].style.display = "block";
-                    document.getElementsByClassName("hide_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("edit_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("del_bt")[open_note].style.display = "none";
+                function toStringByFormatting(source, delimiter = '-') {
+                    const year = source.getFullYear();
+                    const month = leftPad(source.getMonth() + 1);
+                    const day = leftPad(source.getDate());
+
+                    return [year, month, day].join(delimiter);
                 }
-                document.getElementsByClassName("card-text")[num].style.height = "100%";
-                document.getElementsByClassName("card-text")[num].style.display = "block";
-                document.getElementsByClassName("more_bt")[num].style.display = "none";
-                document.getElementsByClassName("hide_bt")[num].style.display = "block";
-                document.getElementsByClassName("edit_bt")[num].style.display = "block";
-                document.getElementsByClassName("del_bt")[num].style.display = "block";
-                open_note = num;
-             }else {
-                document.getElementsByClassName("card-text")[num].style.height = "72px";
-                document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
-                document.getElementsByClassName("more_bt")[num].style.display = "block";
-                document.getElementsByClassName("hide_bt")[num].style.display = "none";
-                document.getElementsByClassName("edit_bt")[num].style.display = "none";
-                document.getElementsByClassName("del_bt")[num].style.display = "none";
-            }
-            }
+
+                // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
+                function logout() {
+                    $.removeCookie('mytoken');
+                    alert('로그아웃!')
+                    window.location.href = '/login'
+                }
+
+                function save_comment() {
+                    let title = $('#context-title').val()
+                    let comment = $('#context-main').val()
+                    let id = id_data
+                    let date = today
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/upload',
+                        data: {title_give: title, comment_give: comment, id_give: id, date_give: date},
+                        success: function (response) {
+                            console.log(response)
+                            alert(response['msg'])
+                            window.location.reload()
+                        }
+                    })
+                }
 
 
+                function more_context(num) {
+                    if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
+                        if (typeof open_note == "number") {
+                            document.getElementsByClassName("card-text")[open_note].style.height = "72px";
+                            document.getElementsByClassName("card-text")[open_note].style.display = "-webkit-box";
+                            document.getElementsByClassName("more_bt")[open_note].style.display = "block";
+                            document.getElementsByClassName("hide_bt")[open_note].style.display = "none";
+                            document.getElementsByClassName("edit_bt")[open_note].style.display = "none";
+                            document.getElementsByClassName("del_bt")[open_note].style.display = "none";
+                        }
+                        document.getElementsByClassName("card-text")[num].style.height = "100%";
+                        document.getElementsByClassName("card-text")[num].style.display = "block";
+                        document.getElementsByClassName("more_bt")[num].style.display = "none";
+                        document.getElementsByClassName("hide_bt")[num].style.display = "block";
+                        document.getElementsByClassName("edit_bt")[num].style.display = "block";
+                        document.getElementsByClassName("del_bt")[num].style.display = "block";
+                        open_note = num;
+                    } else {
+                        document.getElementsByClassName("card-text")[num].style.height = "72px";
+                        document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
+                        document.getElementsByClassName("more_bt")[num].style.display = "block";
+                        document.getElementsByClassName("hide_bt")[num].style.display = "none";
+                        document.getElementsByClassName("edit_bt")[num].style.display = "none";
+                        document.getElementsByClassName("del_bt")[num].style.display = "none";
+                    }
+                }
 
-        function show_comment() {
-            $.ajax({
-                type: "GET",
-                url: "/getcomment",
-                data: {},
-                success: function (response) {
-                    let rows = response['comments']
-                    for (let i = 0; i < rows.length; i++) {
-                        console.log(rows[i])
-                        let title = rows[i]['title']
-                        let comment = rows[i]['comment']
-                        let date = rows[i]['date']
-                        let count = rows[i]['count']
-                        let temp_html = `
+
+                function show_comment() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/getcomment",
+                        data: {},
+                        success: function (response) {
+                            let rows = response['comments']
+                            for (let i = 0; i < rows.length; i++) {
+                                console.log(rows[i])
+                                let title = rows[i]['title']
+                                let comment = rows[i]['comment']
+                                let date = rows[i]['date']
+                                let count = rows[i]['count']
+                                let temp_html = `
                         <div class="card border-dark mb-3" style="width:65rem;">
         <div class="card-header">
             <!-- 노트 상단 왼쪽 -->
@@ -216,28 +233,28 @@
             </div>
         </div>
     </div>`
-                        $('#comment-list').append(temp_html)
-                    }
+                                $('#comment-list').append(temp_html)
+                            }
 
 
+                        }
+                    });
                 }
-            });
-        }
 
 
-        function delet_todo(num) {
-            /*              array에서 삭제한다.
+                function delet_todo(num) {
+                    /*              array에서 삭제한다.
             전체를 비운다.
             for문으로 다시 작성한다.
             */
-        }
+                }
 
-        function add_todo() {
-            if(writing){
-                let todo_text = ($('#todo-input').val()).trim()
+                function add_todo() {
+                    if (writing) {
+                        let todo_text = ($('#todo-input').val()).trim()
 
-                if (todo_text != "") {
-                    let temp_html = `<li class="list-group-item">
+                        if (todo_text != "") {
+                            let temp_html = `<li class="list-group-item">
                                     <strong class="list-group-item-context">${todo_text}</strong>
 
                                     <div class="list-group-item-bts">
@@ -245,17 +262,31 @@
                                     </div>
 
                                     </li>`
-                    $.ajax({});
-                    array_todo.push(todo_text)
-                    array_num += 1
-                    console.log(array_num, array_todo)
-                    $('#todo-input').val('');
-                    $('#list-group').append(temp_html);
-                    alert("To-do 리스트에 추가 되었습니다.")
-                    $('#todo-input').focus();
+                            $.ajax({});
+                            array_todo.push(todo_text)
+                            array_num += 1
+                            console.log(array_num, array_todo)
+                            $('#todo-input').val('');
+                            $('#list-group').append(temp_html);
+                            alert("To-do 리스트에 추가 되었습니다.")
+                            $('#todo-input').focus();
+                        }
+                    }
                 }
+                //차순 정렬
+                console.log(data.sort(date_ascending)); // 오름차순
+                function date_ascending(a, b) {
+                    var dateA = new Date(a['날짜']).getTime();
+                    var dateB = new Date(b['날짜']).getTime();
+                    return dateA > dateB ? 1 : -1;
+                };
+                console.log(data.sort(date_descending)) // 내림차순
+                function date_descending(a, b) {
+                    var dateA = new Date(a['날짜']).getTime();
+                    var dateB = new Date(b['날짜']).getTime();
+                    return dateA < dateB ? 1 : -1;
+                };
             }
-        }
 
 
     </script>
@@ -270,8 +301,8 @@
 <main id="comment-list" >
     <div class="main-box">
         <div class="share_btn"><button type="button" onclick="sharetwitter()" class="btn_comm">트위터로 공유하기</button>
-            <button type="button" id="shareFb" class="btn_comm">페이스북으로 공유하기</button>
-            <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
+            <button type="button" id="shareFb" onclick="sharefacebook()" class="btn_comm">페이스북으로 공유하기</button>
+            <button type="button" id="shareKt" onclick="sharekakaotalk()" class="btn_comm">카카오톡으로 공유하기</button>
             <div class="search-box d-flex justify-content-center">
                 <input id="input-word" class="form-control" style="margin-right: 0.5rem">
                 <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button></div>

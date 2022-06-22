@@ -191,6 +191,67 @@ footer {
 }
 
 
+.write-nav .todo-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-area > input {
+    /*max-width: 100%;*/
+}
+
+.todo-area > button {
+    width: 100px;
+    height: 58px;
+    padding: 1em;
+}
+
+.list-group {
+    margin-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.list-group-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-group-item-context{
+    word-break:break-all;
+}
+
+.list-group-item-bts {
+    min-width: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.write-body textarea {
+    min-height: 150px;
+    width: 100%;
+    resize: none;
+    overflow-y: hidden; /* prevents scroll bar flash */
+    padding: 1.1em; /* prevents text jump on Enter keypress */
+    padding-bottom: 0.2em;
+    line-height: 1.6;
+}
+
+.form-control {
+    height: 100%;
+}
+
+.write-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .write-area.modal-open .write-modal {
     top: 0;
 }

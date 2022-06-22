@@ -63,6 +63,7 @@ def upload():
     return jsonify({'msg': '게시 완료'})
 
 
+
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
