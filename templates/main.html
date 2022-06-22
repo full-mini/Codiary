@@ -40,8 +40,6 @@
 <!-- 로컬에서 CSS 가져오기-->
     <link href="style.css" rel="stylesheet" type="text/css"/>
 
-
-
     <script>
         $(document).ready(function () {
             $('#summernote').summernote({
@@ -293,21 +291,21 @@
         <div class="write-modal">
             <div class="write-header">
                 <div class="write-nav">
-                    <div class="todo-area form-floating mb-3">
+                    <div class="todo-area form-floating">
                         <input type="text" class="form-control todo-input" id="todo-input" placeholder="todo"
                                style="ime-mode:active;">
                         <label for="todo-input">오늘 할 일을 우선 계획해보세요!</label>
                         <button type="button" class="btn btn-success ml-2" onclick="add_todo()">추가</button>
                     </div>
                     <div class="panel-body">
-                        <ul class="list-group" id="list-group">
+                        <ul class="list-group mt-1" id="list-group">
 
                         </ul>
                     </div>
                 </div>
                 <div class="write-body">
 <!-- 에디터 소스-->
-                    <form method="post" class="form-floating mb-3" action="">
+                    <form method="post" class="form-floating mt-2 mb-2" action="">
                         <input type="text" name="subject" class="form-control" id="context-title" placeholder="title">
                         <label for="context-title">제목</label>
                     </form>
@@ -341,11 +339,11 @@
                 }
         });
 
-        <!-- 모달창: 열기 / 닫기 버튼 -->
+        <!-- 모달창: 열기 / 닫기 버튼 (닫을 경우 내용 초기화 기능) -->
         $('.js-click').click(function () {
             $('.write-area').addClass('modal-open');
             $("html").css('overflow-y', 'hidden');
-            $("write-footer").css('position', 'fixed');
+            $(".write-footer").css('display', 'flex');
 
             writing = true;
         });
@@ -353,9 +351,9 @@
         $('.js-close').click(function () {
             if ($('#context-title').val() != '' || !($('#summernote').val() == '' || $('#summernote').val() == '<p><br></p>')  || array_todo.length != 0) {
                 if (confirm("작성중이던 내용이 있습니다. 그래도 닫으시겠습니까?")) {
+                    $(".write-footer").css('display', 'none');
                     $('.write-area').removeClass('modal-open');
                     $("html").css('overflow-y', 'auto');
-                    $("write-footer").css('position', '');
                     $(".write-body textarea").css('height', '150');
                     $('#context-title').val('');
                     $('#todo-input').val('');
@@ -371,7 +369,7 @@
             } else {
                 $('.write-area').removeClass('modal-open');
                 $("html").css('overflow-y', 'auto');
-                $("write-footer").css('position', '');
+                $(".write-footer").css('display', 'none');
                 writing = false;
             }
         });
