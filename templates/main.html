@@ -27,12 +27,12 @@
     <!-- JS -->
 
     <script>
-        const today = toStringByFormatting(new Date(),',')
-        let id_data = {{ data.id|tojson }}
 
-            $(document).ready(function () {
-            show_comment();
-        });
+    function sharetwitter() {
+        let sendUrl = "naver.com";
+        let sendText = "공유 테스트"
+        window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+    }
 
 
 
@@ -60,39 +60,33 @@
 
             return [year, month, day].join(delimiter);
         }
-
-
-
-            //게시물 저장 서버에 보내기!
-            //id, 제목, 내용 보내기
-            function save_comment() {
-                let title = $('#title').val()
-                let comment = $('#comment').val()
-                let id = id_data
-                let date = today
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/upload',
-                    data: {title_give: title, comment_give: comment, id_give: id, date_give: date},
-                    success: function (response) {
-                        console.log(response)
-                        alert(response['msg'])
-                        window.location.reload()
-                    }
-                })
-            }
-
-
-        // 서버에서 정보 받아오기
-        //아이디, 제목, 내용, 시간, 카운트!E
-
         // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
         function logout() {
             $.removeCookie('mytoken');
             alert('로그아웃!')
             window.location.href = '/login'
         }
+        //검색하기
+        let words = {{ words|tojson }};
+        let word_list = [];
+        for (let i = 0; i < words.length; i++) { word_list.push(words[i]["word"]) }
+        console.log(word_list)
+
+        function find_word() {
+            let word = $("#input-word").val().toLowerCase();
+            if (word == "") {
+                // 빈 문자열이면 알림
+                alert("값을 입력해주세요")
+                return
+            }
+            if (word_list.includes(word)) {
+                // 리스트에 있으면 하이라이트
+                $(`#word-${word}`).addClass('highlight').siblings().removeClass('highlight');
+                $(`#word-${word}`)[0].scrollIntoView();
+                window.location.reload()
+            }
+            //공유하기
+        function sharetwitter() {
 
         function more_context(num) {
             if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
@@ -119,7 +113,6 @@
                 document.getElementsByClassName("edit_bt")[num].style.display = "none";
                 document.getElementsByClassName("del_bt")[num].style.display = "none";
             }
-        }
 
 
         function show_comment() {
@@ -172,8 +165,6 @@
                     }
 
 
-                }
-            });
         function delet_todo(num) {
             /*              array에서 삭제한다.
             전체를 비운다.
@@ -204,29 +195,86 @@
             }
         }
 
-
     </script>
 </head>
 <body>
 <nav>
-    <h1> {{ data.nick }} 님의 CODIARY12</h1>
-    <!-- 로그아웃 버튼 -->
+    <h1> {{nickname}}님의 CODIARY</h1>
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
-<main id="comment-list">
-    <!-- 정렬, 공유, 검색 기능 구현 -->
-    <!-- 게시물 크롤링, 언어관련 강의 -->
+<main>
+    <div class="main-box">
+        <div class="share_btn"><button type="button" onclick="sharetwitter()" class="btn_comm">트위터로 공유하기</button>
+            <button type="button" id="shareFb" class="btn_comm">페이스북으로 공유하기</button>
+            <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
+            <div class="search-box d-flex justify-content-center">
+                <input id="input-word" class="form-control" style="margin-right: 0.5rem">
+                <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button></div>
 
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <div class="note-top-day ml-2">Day 02</div>
+                    <div class="note-top-title ml-2">
+                        <div>22.6.21 PM 18:30</div>
+                        <div>나는 제목이다</div>
+                    </div>
+                </div>
+                <div class="card-body text-dark note-bottom">
+                    <p class="card-text ml-3 pr-5">
+                        동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+                    </p>
+                    <div class="note-button ml-3 mt-2" >
+                        <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <div class="note-top-day ml-2">Day 02</div>
+                    <div class="note-top-title ml-2">
+                        <div>22.6.21 PM 18:30</div>
+                        <div>나는 제목이다</div>
+                    </div>
+                </div>
+                <div class="card-body text-dark note-bottom">
+                    <p class="card-text ml-3 pr-5">
+                        동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+                    </p>
+                    <div class="note-button ml-3 mt-2" >
+                        <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-dark mb-3">
+                <div class="card-header">
+                    <div class="note-top-day ml-2">Day 02</div>
+                    <div class="note-top-title ml-2">
+                        <div>22.6.21 PM 18:30</div>
+                        <div>나는 제목이다</div>
+                    </div>
+                </div>
+                <div class="card-body text-dark note-bottom">
+                    <p class="card-text ml-3 pr-5">
+                        동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리 기상일세.무궁화 삼천리 화려 강산대한 사람,
+                        대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사
+                    </p>
+                    <div class="note-button ml-3 mt-2" >
+                        <button type="button" class="btn btn-secondary" id="more-context"><i class="fa-solid fa-caret-down"></i> 더보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </main>
 
 <footer>
-    <!-- 게시물 쓰기 버튼, 클릭시 모달 창 띄움 -->
-    <div class="add_note">
-        <button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button>
-    </div>
+    <div class="add_note"><button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button></div>
 </footer>
 
-<!-- 모달 창 설정 -->
 <div id="modal" class="modal-overlay">
     <div class="modal-window">
         <div class="title">
@@ -244,8 +292,7 @@
           style="height: 100px"></textarea>
                 <label for="floatingTextarea2">내용</label>
             </div>
-            <!-- 기록버튼 -->
-            <button onclick="save_comment()" type="button" class="btn btn-dark"> 기록하기</button>
+            <button onclick="save_comment()" type="button" class="btn btn-dark"> 기록하기 </button>
         </div>
     </div>
 
