@@ -64,7 +64,12 @@ main {
     display: flex;
     justify-content: flex-end;
 }
-
+.btn-share > image{
+  padding: 10px 20px;
+  outline: 0;
+  position: relative;
+  display: inline-block;
+}
 footer {
     height: 40px;
     display: flex;
@@ -300,7 +305,7 @@ footer {
 }
         .main-box {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
             width: 95%;

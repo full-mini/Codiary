@@ -17,6 +17,7 @@
     <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
@@ -123,6 +124,20 @@
                         }
                     });
                 });
+
+                //차순 정렬
+                console.log(data.sort(date_ascending)); // 오름차순
+                function date_ascending(a, b) {
+                    var dateA = new Date(a['날짜']).getTime();
+                    var dateB = new Date(b['날짜']).getTime();
+                    return dateA > dateB ? 1 : -1;
+                };
+                console.log(data.sort(date_descending)) // 내림차순
+                function date_descending(a, b) {
+                    var dateA = new Date(a['날짜']).getTime();
+                    var dateB = new Date(b['날짜']).getTime();
+                    return dateA < dateB ? 1 : -1;};
+            }
 
 
                 function toStringByFormatting(source, delimiter = '-') {
@@ -273,20 +288,7 @@
                         }
                     }
                 }
-                //차순 정렬
-                console.log(data.sort(date_ascending)); // 오름차순
-                function date_ascending(a, b) {
-                    var dateA = new Date(a['날짜']).getTime();
-                    var dateB = new Date(b['날짜']).getTime();
-                    return dateA > dateB ? 1 : -1;
-                };
-                console.log(data.sort(date_descending)) // 내림차순
-                function date_descending(a, b) {
-                    var dateA = new Date(a['날짜']).getTime();
-                    var dateB = new Date(b['날짜']).getTime();
-                    return dateA < dateB ? 1 : -1;
-                };
-            }
+
 
 
     </script>
@@ -294,17 +296,16 @@
 </head>
 
 <body>
-
 <nav>
     <h1> {{data.nick}}님의 CODIARY</h1>
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
 <main id="comment-list" >
     <div class="main-box">
-        <div class="share_btn"><button type="button" onclick="sharetwitter()" class="btn_comm">트위터로 공유하기</button>
-            <button type="button" id="shareFb" onclick="sharefacebook()" class="btn_comm">페이스북으로 공유하기</button>
-            <button type="button" id="shareKt" onclick="sharekakaotalk()" class="btn_comm">카카오톡으로 공유하기</button>
-            <div class="search-box d-flex justify-content-center">
+            <button type="button" id="shareTw"><img src="static/twitter.png" style="height:30px; outline-style:none " alt="twitter"></button>
+            <button type="button" id="shareFb"><img src="static/facebook.png" style="height:30px; outline-style:none"alt="facebook"></button>
+            <button type="button" id="shareKt"><img src="static/kakaotalk.png" style="height:30px; outline-style:none"alt="kakaotalk"></button>
+            <div class="share_btn"><div class="search-box d-flex justify-content-center">
                 <input id="input-word" class="form-control" style="margin-right: 0.5rem">
                 <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button></div>
 
