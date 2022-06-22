@@ -17,6 +17,8 @@
     <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 
+    <!-- google icon -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
@@ -308,6 +310,9 @@
         <input id="input-word" class="form-control">
         <button class="btn btn-light" onclick="find_word()">
             <i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div>
+        <button type="button" id="filter"><img src="static/filter.png" style="height:30px;  alt=""></button>
     </div>
 
     <footer>
