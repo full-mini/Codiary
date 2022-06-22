@@ -232,6 +232,11 @@ footer {
     align-items: center;
 }
 
+img {border: none; max-width: 100%}
+
+#shareFb,#shareKt,#shareTw{border: 0; outline: 0;
+    background-color: transparent; height:30px;}
+
 .write-body textarea {
     min-height: 150px;
     width: 100%;
