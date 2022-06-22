@@ -73,6 +73,7 @@
 
             return [year, month, day].join(delimiter);
         }
+
         // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
         function logout() {
             $.removeCookie('mytoken');
@@ -165,10 +166,10 @@
                 <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i
                         class="fa-solid fa-trash-can"></i> 삭제
                 </button>
-                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(0)"
+                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(${count})"
                         style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
                 </button>
-                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(0)"
+                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(${count})"
                         style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
                 </button>
             </div>
