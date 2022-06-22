@@ -155,3 +155,7 @@ footer{
     display:flex;
     justify-items:flex-start;
 }
+
+.is-danger {
+    color: #ff8080;
+}
