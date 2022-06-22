@@ -16,8 +16,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
         <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">
-        <link rel="stylesheet" href="style.css">
-        <a href="http://www.naver.com"><img src="static\Logo1"/></a>
+        <link rel="stylesheet" href="../static/style.css">
+
 
 
 
@@ -50,7 +50,7 @@
                             $.cookie('mytoken', response['token']);
 
                             alert('로그인 완료!')
-                            window.location.href = '/cordiary'
+     ![](../static/Logo2.png)                       window.location.href = '/cordiary'
                         } else {
                             // 로그인이 안되면 에러메시지를 띄웁니다.
                             alert(response['msg'])
@@ -67,6 +67,7 @@
         </script>
     </head>
     <body>
+    <a href="http://www.naver.com"><img src="static/Logo1.png"/></a>
         <div class="section has-text-centered">
             <h1 class="title">로그인 페이지</h1>
             <div class="container" style="width:50%">
