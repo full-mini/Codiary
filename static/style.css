@@ -64,12 +64,7 @@ main {
     display: flex;
     justify-content: flex-end;
 }
-.btn-share > image{
-  padding: 10px 20px;
-  outline: 0;
-  position: relative;
-  display: inline-block;
-}
+
 footer {
     height: 40px;
     display: flex;
@@ -303,31 +298,42 @@ footer {
         font-size: 0.7rem;
     }
 }
-        .main-box {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 95%;
-            max-width: 500px;
-            padding: 20px;
-            margin: auto;
-        }
-        .search-box { width: 70%;
-            margin: 50px auto;
-            max-width: 700px;
+.comment-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    max-width: 500px;
+    padding: 20px;
+    margin: auto;
 }
-        tr.highlight > td { background-color: #0c5e81;
-            color: white;
+.share-box{
+
+
+
+}
+.share-box > button{
+      background-image: none;
+}
+.search-box { width: 70%;
+    margin: 50px auto;
+    max-width: 700px;
+}
+.form-control{
+    margin-right: 0.5rem;
+}
+tr.highlight > td { background-color: #0c5e81;
+    color: white;
 }
 tr.highlight a { color: white;
 }
 
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
+    font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48
 }
