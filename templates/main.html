@@ -107,14 +107,15 @@
         function sharetwitter() {
         }
         //페이스북 공유하기
-        function sharefacebook() {
-
+        $(document).ready(function (){
             const btnShareFb = document.querySelector('#shareFb');
-
             btnShareFb.addEventListener('click', () => {
-                const pageUrl = 'news.v.daum.net/v/20220319120213003';
-                window.open(`http://www.facebook.com/sharer/sharer.php?u=${pageUrl}`);
-            })
+                let sendUrl = 'naver.com';
+                let sendText = "공유 테스트"
+                window.open(`http://www.facebook.com/sharer/sharer.php?u=${sendText}&url=${sendUrl}`);
+            })}
+        )
+        function sharefacebook() {
         }
             //카카오톡 공유하기
         function sharekakaotalk() {
