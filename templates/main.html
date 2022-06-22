@@ -19,6 +19,8 @@
 
     <!-- google icon -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+      <!-- kakotalk share -->
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
@@ -105,17 +107,18 @@
             })}
         )
         function sharetwitter() {
+
         }
         //페이스북 공유하기
-        $(document).ready(function (){
+        $(document).ready(function () {
             const btnShareFb = document.querySelector('#shareFb');
             btnShareFb.addEventListener('click', () => {
-                let sendUrl = 'naver.com';
-                let sendText = "공유 테스트"
-                window.open(`http://www.facebook.com/sharer/sharer.php?u=${sendText}&url=${sendUrl}`);
-            })}
-        )
+
+            })
+        })
         function sharefacebook() {
+               let sendUrl = 'news.v.daum.net/v/20220319120213003';
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${sendUrl}`);
         }
             //카카오톡 공유하기
         function sharekakaotalk() {
@@ -299,7 +302,7 @@
                 }
             }
         }
-
+}
     </script>
 
 </head>
@@ -312,7 +315,7 @@
 <main class="comment-list">
     <div class="share-box" style="display: flex; ">
         <button type="button" id="shareTw"><img src="static/twitter.png" style="height:30px;  alt=""></button>
-        <button type="button" id="shareFb"><img src="static/facebook.png" style="height:30px; alt=""></button>
+        <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png" style="height:30px; alt=""></button>
         <button type="button" id="shareKt"><img src="static/kakaotalk.png" style="height:30px; alt=""></button>
     </div>
     <div class="search-box d-flex justify-content-center">
