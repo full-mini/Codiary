@@ -16,6 +16,7 @@ nav {
 
 main {
     width: 100%;
+    margin-top: 0.5rem;
     margin-bottom: 3rem;
     display: flex;
     flex-direction: column;
@@ -83,26 +84,26 @@ footer {
     left: 0px;
     bottom: 0px;
     right: 0px;
+    height: 4rem;
 }
 
 .add_note > button {
     background-color: #0d6efd;
     color: white;
     font-size: 1rem;
-}
-
-.add_note > button {
     border-radius: 0;
 }
 
 .write-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: #fff;
     width: 100%;
     height: 100%;
     /*max-height: calc(100vh);*/
-    overflow-y: auto;
+    overflow-y: visible;
     margin: 0;
-    padding: 1rem 1rem;
     transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
     top: 100%;
     position: fixed;
@@ -110,14 +111,23 @@ footer {
     text-align: left;
 }
 
+.write-modal .write-header {
+    padding: 0.3rem 0.3rem;
+    margin-bottom: 3rem;
+    border-bottom: 0px;
+    overflow-y: auto;
+}
+
+
 .write-modal .write-nav {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #28a745;
     position: relative;
 }
 
 .write-modal .write-body {
     font: 300 16px Lato;
-    padding: 0;
+    padding: 0 ;
+    width: 100%;
 }
 
 
@@ -140,7 +150,6 @@ footer {
 
 .list-group {
     margin-bottom: 10px;
-
     -webkit-overflow-scrolling: touch;
 }
 
@@ -163,10 +172,6 @@ footer {
     align-items: center;
 }
 
-.note-toolbar{
-    overflow-x:auto;
-}
-
 .note-editable {
     min-height: 150px;
     width: 100%;
@@ -182,18 +187,20 @@ footer {
     height: 100%;
 }
 
-.write-modal {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 
 .write-area.modal-open .write-modal {
     top: 0;
 }
 
-.write-footer {
+.write-footer{
     display: flex;
+    justify-content: space-between;
+}
+
+.write-footer-bt {
+    width: 100%;
+    display: none;
+    position: fixed;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
@@ -212,7 +219,7 @@ footer {
 
 .write-footer button {
     border-radius: 0;
-    height: 2rem;
+    height: 4rem;
     width: 100%;
 }
 
@@ -224,9 +231,19 @@ footer {
     display: none;
 }
 
+.note-toolbar{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow : row wrap;
+    justify-content: flex-start;
+}
 
+.note-toolbar .note-btn-group{
+    height: 33px;
+}
 
-@media screen and (max-width: 30rem) {
+@media screen and (max-width: 40rem) {
     .btn {
         font-size: 0.9rem;
     }

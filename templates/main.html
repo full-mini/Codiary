@@ -35,27 +35,30 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
 <!-- 깃헙 main에서 CSS 가져오기-->
-    <!--<link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">-->
+<!--    <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">-->
 
-<!-- 로컬에서 CSS 가져오기-->
-    <link href="style.css" rel="stylesheet" type="text/css"/>
-
-
+<!-- 로컬에서 CSS 가져오기 -->
+    <link href="/static/style.css" rel="stylesheet" type="text/css"/>
 
     <script>
         $(document).ready(function () {
             $('#summernote').summernote({
                 placeholder: '내용을 입력해주세요.',
-                tabsize: 2,
+                tabsize: 6,
                 height: 300,
                 toolbar: [
-                    ['style', ['style']],
-                    ['para', ['paragraph']],
-                    ['color', ['color']],
-                    ['font', ['bold', 'underline', 'clear']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['codeview']]
-                ]
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
             });
         });
     </script>
@@ -92,7 +95,6 @@
                 }
             })
         }
-
 
         // 서버에서 정보 받아오기
         //아이디, 제목, 내용, 시간, 카운트!E
@@ -132,32 +134,34 @@
         }
 
         function delet_todo(num) {
-            /*              array에서 삭제한다.
-            전체를 비운다.
-            for문으로 다시 작성한다.
-            */
+            if(writing && array_todo[num] != '') {
+                array_todo[num]='';
+                let child_element = document.getElementById(`todo_child_${num}`);
+                child_element.remove();
+            }
         }
 
         function add_todo() {
-            let todo_text = ($('#todo-input').val()).trim()
+            if(writing){
+                let todo_text = ($('#todo-input').val()).trim()
 
-            if (todo_text != "") {
-                let temp_html = `<li class="list-group-item">
-                                <strong class="list-group-item-context">${todo_text}</strong>
+                if (todo_text != "") {
+                    let temp_html = `<li class="list-group-item" id="todo_child_${array_num}">
+                                    <strong class="list-group-item-context">${todo_text}</strong>
 
-                                <div class="list-group-item-bts">
-                                <button type="button" class="btn btn-danger" onclick="delet_todo(${array_num})">삭제</button>
-                                </div>
+                                    <div class="list-group-item-bts">
+                                    <button type="button" class="btn btn-danger" onclick="delet_todo(${array_num})">삭제</button>
+                                    </div>
 
-                                </li>`
-                $.ajax({});
-                array_todo.push(todo_text)
-                array_num += 1
-                console.log(array_num, array_todo)
-                $('#todo-input').val('');
-                $('#list-group').append(temp_html);
-                alert("To-do 리스트에 추가 되었습니다.")
-                $('#todo-input').focus();
+                                    </li>`
+                    array_todo.push(todo_text)
+                    array_num += 1
+                    console.log(array_num, array_todo)
+                    $('#todo-input').val('');
+                    $('#list-group').append(temp_html);
+                    alert("To-do 리스트에 추가 되었습니다.")
+                    $('#todo-input').focus();
+                }
             }
         }
 
@@ -293,21 +297,21 @@
         <div class="write-modal">
             <div class="write-header">
                 <div class="write-nav">
-                    <div class="todo-area form-floating mb-3">
+                    <div class="todo-area form-floating">
                         <input type="text" class="form-control todo-input" id="todo-input" placeholder="todo"
                                style="ime-mode:active;">
                         <label for="todo-input">오늘 할 일을 우선 계획해보세요!</label>
                         <button type="button" class="btn btn-success ml-2" onclick="add_todo()">추가</button>
                     </div>
                     <div class="panel-body">
-                        <ul class="list-group" id="list-group">
+                        <ul class="list-group mt-1" id="list-group">
 
                         </ul>
                     </div>
                 </div>
                 <div class="write-body">
 <!-- 에디터 소스-->
-                    <form method="post" class="form-floating mb-3" action="">
+                    <form method="post" class="form-floating mt-2 mb-2" action="">
                         <input type="text" name="subject" class="form-control" id="context-title" placeholder="title">
                         <label for="context-title">제목</label>
                     </form>
@@ -316,12 +320,15 @@
                 </div>
             </div>
             <div class="write-footer">
-                <div class="write-complete">
-                    <button type="button" class="btn btn-success mt-2">작성하기</button>
+                <div class="write-footer-bt">
+                    <div class="write-complete">
+                        <button type="button" class="btn btn-success mt-2" onclick="writing_complete()">작성하기</button>
+                    </div>
+                    <div class="js-close">
+                        <button type="button" class="btn btn-danger mt-2">닫기</button>
                 </div>
-                <div class="js-close">
-                    <button type="button" class="btn btn-danger mt-2">닫기</button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -341,11 +348,11 @@
                 }
         });
 
-        <!-- 모달창: 열기 / 닫기 버튼 -->
+        <!-- 모달창: 열기 / 닫기 버튼 (닫을 경우 내용 초기화 기능) -->
         $('.js-click').click(function () {
             $('.write-area').addClass('modal-open');
             $("html").css('overflow-y', 'hidden');
-            $("write-footer").css('position', 'fixed');
+            $(".write-footer-bt").css('display', 'flex');
 
             writing = true;
         });
@@ -354,8 +361,8 @@
             if ($('#context-title').val() != '' || !($('#summernote').val() == '' || $('#summernote').val() == '<p><br></p>')  || array_todo.length != 0) {
                 if (confirm("작성중이던 내용이 있습니다. 그래도 닫으시겠습니까?")) {
                     $('.write-area').removeClass('modal-open');
+                    $(".write-footer-bt").css('display', 'none');
                     $("html").css('overflow-y', 'auto');
-                    $("write-footer").css('position', '');
                     $(".write-body textarea").css('height', '150');
                     $('#context-title').val('');
                     $('#todo-input').val('');
@@ -370,8 +377,8 @@
                 }
             } else {
                 $('.write-area').removeClass('modal-open');
+                $(".write-footer-bt").css('display', 'none');
                 $("html").css('overflow-y', 'auto');
-                $("write-footer").css('position', '');
                 writing = false;
             }
         });
