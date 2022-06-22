@@ -144,8 +144,14 @@ footer{
 }
 
 .btn-float {
+    width:3rem;
     float:right;
     background-color:#fffcf7;
     border:1px solid darkgray;
     border-radius : 5px;
+}
+
+.sumone {
+    display:flex;
+    justify-items:flex-start;
 }
