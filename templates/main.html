@@ -96,29 +96,36 @@
             return [year, month, day].join(delimiter);
         }
         //트위터 공유하기
-
-        function sharetwitter() {#}
+        $(document).ready(function (){
             const btnShareTw = document.querySelector('#shareTw');
             btnShareTw.addEventListener('click', () => {
                 let sendUrl = "naver.com";
                 let sendText = "공유 테스트"
-                window.open(`https://twitter.com/intent/tweet?text=${sendText}&url=${pageUrl}`);
-            })
-            //페이스북 공유하기
+                window.open(`https://twitter.com/intent/tweet?text=${sendText}&url=${sendUrl}`);
+            })}
+        )
+        function sharetwitter() {
+        }
+        //페이스북 공유하기
+        function sharefacebook() {
+
             const btnShareFb = document.querySelector('#shareFb');
 
             btnShareFb.addEventListener('click', () => {
                 const pageUrl = 'news.v.daum.net/v/20220319120213003';
                 window.open(`http://www.facebook.com/sharer/sharer.php?u=${pageUrl}`);
             })
+        }
             //카카오톡 공유하기
+        function sharekakaotalk() {
             Kakao.init('7daa7d5fef046cea4ec3b64870f2c4d3');
 
             Kakao.Link.createCustomButton({
                 container: '#shareKt',
                 templateId: 78517, // 나의 앱 ID 작성
             });
-
+        }
+           //투두리스트
             $(document).ready(function () {
                 $('#todo-input').keydown(function (key) {
                     if (key.keyCode == 13) {
@@ -128,18 +135,19 @@
             });
 
             //차순 정렬
-            console.log(data.sort(date_ascending)); // 오름차순
+            {#console.log(data.sort(date_ascending)); // 오름차순#}
             function date_ascending(a, b) {
                 var dateA = new Date(a['날짜']).getTime();
                 var dateB = new Date(b['날짜']).getTime();
                 return dateA > dateB ? 1 : -1;
-            };
-            console.log(data.sort(date_descending)) // 내림차순
+            }
+            {#console.log(data.sort(date_descending)) // 내림차순#}
             function date_descending(a, b) {
                 var dateA = new Date(a['날짜']).getTime();
                 var dateB = new Date(b['날짜']).getTime();
-                return dateA < dateB ? 1 : -1;};
-        }
+                return dateA < dateB ? 1 : -1;
+            }
+
 
 
         function toStringByFormatting(source, delimiter = '-') {
