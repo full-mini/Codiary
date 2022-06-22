@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
@@ -65,11 +66,35 @@
 
 
     <script>
+        const today = toStringByFormatting(new Date(),',')
+        let id_data = {{ data.id|tojson }}
 
-        var open_note = false;
-        var writing = false;
-        var array_todo = [];
-        var array_num = 0;
+            $(document).ready(function () {
+            show_comment();
+        });
+
+
+
+            function leftPad(value) {
+                if (value >= 10) {
+                    return value;
+                }
+
+                return `0${value}`;
+            }
+
+        function toStringByFormatting(source, delimiter = '-') {
+            const year = source.getFullYear();
+            const month = leftPad(source.getMonth() + 1);
+            const day = leftPad(source.getDate());
+
+            return [year, month, day].join(delimiter);
+        }
+    function sharetwitter() {
+        let sendUrl = "naver.com";
+        let sendText = "공유 테스트"
+        window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+    }
 
         $(document).ready(function () {
             $('#todo-input').keydown(function (key) {
@@ -79,26 +104,14 @@
             });
         });
 
-        //게시물 저장 서버에 보내기!
-        //id, 제목, 내용 보내기
-        function save_comment() {
-            let title = $('#title').val()
-            let comment = $('#comment').val()
-            $.ajax({
-                type: 'POST',
-                url: '/upload',
-                data: {title_give: title, comment_give: comment},
-                success: function (response) {
-                    console.log(response)
-                    alert(response['msg'])
-                    window.location.reload()
-                }
-            })
+
+        function toStringByFormatting(source, delimiter = '-') {
+            const year = source.getFullYear();
+            const month = leftPad(source.getMonth() + 1);
+            const day = leftPad(source.getDate());
+
+            return [year, month, day].join(delimiter);
         }
-
-
-        // 서버에서 정보 받아오기
-        //아이디, 제목, 내용, 시간, 카운트!E
 
         // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
         function logout() {
@@ -106,6 +119,25 @@
             alert('로그아웃!')
             window.location.href = '/login'
         }
+
+        function save_comment() {
+                let title = $('#context-title').val()
+                let comment = $('#context-main').val()
+                let id = id_data
+                let date = today
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/upload',
+                    data: {title_give: title, comment_give: comment, id_give: id, date_give: date},
+                    success: function (response) {
+                        console.log(response)
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                })
+            }
+
 
         function more_context(num) {
             if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
@@ -124,7 +156,7 @@
                 document.getElementsByClassName("edit_bt")[num].style.display = "block";
                 document.getElementsByClassName("del_bt")[num].style.display = "block";
                 open_note = num;
-            } else {
+             }else {
                 document.getElementsByClassName("card-text")[num].style.height = "72px";
                 document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
                 document.getElementsByClassName("more_bt")[num].style.display = "block";
@@ -132,7 +164,64 @@
                 document.getElementsByClassName("edit_bt")[num].style.display = "none";
                 document.getElementsByClassName("del_bt")[num].style.display = "none";
             }
+            }
+
+
+
+        function show_comment() {
+            $.ajax({
+                type: "GET",
+                url: "/getcomment",
+                data: {},
+                success: function (response) {
+                    let rows = response['comments']
+                    for (let i = 0; i < rows.length; i++) {
+                        console.log(rows[i])
+                        let title = rows[i]['title']
+                        let comment = rows[i]['comment']
+                        let date = rows[i]['date']
+                        let count = rows[i]['count']
+                        let temp_html = `
+                        <div class="card border-dark mb-3" style="width:65rem;">
+        <div class="card-header">
+            <!-- 노트 상단 왼쪽 -->
+            <div class="note-top-day ml-2">Note ${count}</div>
+            <!-- 노트 상단 오른쪽 -->
+            <div class="note-top-title ml-2">
+                <div>${date}</div>
+                <div>${title}</div>
+            </div>
+        </div>
+        <div class="card-body text-dark note-bottom">
+            <!-- 노트 내용이 들어가는 부분 -->
+            <div class="card-text ml-1 mr-1">
+                ${comment}
+            </div>
+            <!-- 노트 버튼 (수정/삭제/감추기/더보기) -->
+            <div class="note-button ml-3 mt-2">
+                <button type="button" class="edit_bt btn btn-primary ml-1" style="display:none"><i
+                        class="fa-solid fa-pen"></i> 수정
+                </button>
+                <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i
+                        class="fa-solid fa-trash-can"></i> 삭제
+                </button>
+                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(${count})"
+                        style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
+                </button>
+                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(${count})"
+                        style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
+                </button>
+            </div>
+        </div>
+    </div>`
+                        $('#comment-list').append(temp_html)
+                    }
+
+
+                }
+            });
         }
+
 
         function delet_todo(num) {
             if(writing && array_todo[num] != '') {
@@ -173,119 +262,27 @@
 
 <body>
 <nav>
-    <h1> {{ nickname }} 님의 CODIARY12</h1>
-    <!-- 로그아웃 버튼 -->
+    <h1> {{data.nick}}님의 CODIARY</h1>
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
-<main>
-    <!-- 정렬, 공유, 검색 기능 구현 -->
-    <!-- 게시물 크롤링, 언어관련 강의 -->
+<main id="comment-list" >
+    <div class="main-box">
+        <div class="share_btn"><button type="button" onclick="sharetwitter()" class="btn_comm">트위터로 공유하기</button>
+            <button type="button" id="shareFb" class="btn_comm">페이스북으로 공유하기</button>
+            <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
+            <div class="search-box d-flex justify-content-center">
+                <input id="input-word" class="form-control" style="margin-right: 0.5rem">
+                <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i></button></div>
 
-<!-- 노트 추가 -->
-    <div class="card border-dark mb-3" style="width:65rem;">
-        <div class="card-header">
-            <!-- 노트 상단 왼쪽 -->
-            <div class="note-top-day ml-2">Day 02</div>
-            <!-- 노트 상단 오른쪽 -->
-            <div class="note-top-title ml-2">
-                <div>22.6.21 PM 18:30</div>
-                <div>나는 제목이다</div>
-            </div>
-        </div>
-        <div class="card-body text-dark note-bottom">
-            <!-- 노트 내용이 들어가는 부분 -->
-            <div class="card-text ml-1 mr-1">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리
-                기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이
-                보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 삼천리 화려 강산대한 사람
-                대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
-            </div>
-            <!-- 노트 버튼 (수정/삭제/감추기/더보기) -->
-            <div class="note-button ml-3 mt-2">
-<!-- >> 수정버튼 기능추가 해야함 -->
-                <button type="button" class="edit_bt btn btn-primary ml-1" style="display:none"><i
-                        class="fa-solid fa-pen"></i> 수정
-                </button>
-<!-- >> 삭제버튼 기능추가 해야함 -->
-                <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i
-                        class="fa-solid fa-trash-can"></i> 삭제
-                </button>
-                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(0)"
-                        style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
-                </button>
-                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(0)"
-                        style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
-                </button>
-            </div>
-        </div>
-    </div>
+</div>
+</div>
 
-<!-- 노트 추가 -->
-    <div class="card border-dark mb-3" style="width:65rem;">
-        <div class="card-header">
-            <div class="note-top-day ml-2">Day 02</div>
-            <div class="note-top-title ml-2">
-                <div>22.6.21 PM 18:30</div>
-                <div>나는 제목이다</div>
-            </div>
-        </div>
-        <div class="card-body text-dark note-bottom">
-            <div class="card-text ml-1 mr-1">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리
-                기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이
-                보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 삼천리 화려 강산대한 사람
-                대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
-            </div>
-            <div class="note-button ml-3 mt-2">
-                <button type="button" class="edit_bt btn btn-primary ml-1" style="display:none"><i
-                        class="fa-solid fa-pen"></i> 수정
-                </button>
-                <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i
-                        class="fa-solid fa-trash-can"></i> 삭제
-                </button>
-                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(1)"
-                        style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
-                </button>
-                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(1)"
-                        style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
-                </button>
-            </div>
-        </div>
-    </div>
 
-<!-- 노트 추가 -->
-    <div class="card border-dark mb-3" style="width:65rem;">
-        <div class="card-header">
-            <div class="note-top-day ml-2">Day 02</div>
-            <div class="note-top-title ml-2">
-                <div>22.6.21 PM 18:30</div>
-                <div>나는 제목이다</div>
-            </div>
-        </div>
-        <div class="card-body text-dark note-bottom">
-            <div class="card-text ml-1 mr-1">
-                동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.
-            </div>
-
-            <div class="note-button ml-3 mt-2">
-                <button type="button" class="edit_bt btn btn-primary ml-1" style="display:none"><i
-                        class="fa-solid fa-pen"></i> 수정
-                </button>
-                <button type="button" class="del_bt btn btn-danger ml-1" style="display:none"><i
-                        class="fa-solid fa-trash-can"></i> 삭제
-                </button>
-                <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(2)"
-                        style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
-                </button>
-                <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(2)"
-                        style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
-                </button>
-            </div>
-        </div>
-    </div>
+<footer>
+    <div class="add_note"><button type="button" class="btn btn-primary" id="btn-modal">새 노트 쓰기</button></div>
+</footer>
 
 </main>
-
 
 
 <footer>
@@ -323,7 +320,7 @@
             <div class="write-footer">
                 <div class="write-footer-bt">
                     <div class="write-complete">
-                        <button type="button" class="btn btn-success mt-2" onclick="writing_complete()">작성하기</button>
+                        <button type="button" class="btn btn-success mt-2" onclick="save_comment()">작성하기</button>
                     </div>
                     <div class="js-close">
                         <button type="button" class="btn btn-danger mt-2">닫기</button>
@@ -339,7 +336,7 @@
 
     <script>
 
-        <!-- 모달창: 자동높이 늘리기 -->
+        //<!-- 모달창: 자동높이 늘리기 -->
         $('#summernote').on('summernote.keyup', function(we, e) {
                 var innerHeight = $('.note-editable').innerHeight();
                 var scrollHeight = $('.note-editable').prop('scrollHeight');
@@ -349,7 +346,7 @@
                 }
         });
 
-        <!-- 모달창: 열기 / 닫기 버튼 (닫을 경우 내용 초기화 기능) -->
+       // <!-- 모달창: 열기 / 닫기 버튼 (닫을 경우 내용 초기화 기능) -->
         $('.js-click').click(function () {
             $('.write-area').addClass('modal-open');
             $("html").css('overflow-y', 'hidden');
