@@ -11,6 +11,7 @@
 
         <!-- Bulma CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -24,6 +25,8 @@
                 margin: 30px auto 30px;
                 padding : 20px;
             }
+
+
 
         </style>
 
@@ -174,7 +177,7 @@
                                 <input type="text" class="input" id="userid" aria-describedby="emailHelp"
                                        placeholder="아이디">
                                 <div id="btn-check-dup" calss="control is-hidden">
-                                    <button class="button is-sparta btn-float" onclick="check_dup()">중복 확인</button>
+                                    <button class="btn-float" onclick="check_dup()">중복 확인</button>
                                 </div>
                                 <p id="help-id">아이디는 2-10자이 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다.</p>
                                 <p id="help-id-login" class="help is-danger"></p>
