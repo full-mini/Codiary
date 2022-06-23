@@ -56,7 +56,7 @@
                     data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
                     success: function (response) {
                         if (response['result'] == 'success') {
-                            $.cookie('mytoken', response['token']);
+                            $.cookie('mytoken', response['token'], {path: '/'});
 
                             alert('로그인 완료!')
                             window.location.href = '/cordiary'
