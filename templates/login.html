@@ -31,6 +31,20 @@
         </style>
 
         <script>
+                    $(document).ready(function () {
+                $('#userid').keydown(function (key) {
+                    if (key.keyCode ==13) {
+                        $("#userpw").focus()
+                    }
+                });
+            });
+            $(document).ready(function () {
+                $('#userpw').keydown(function (key) {
+                    if (key.keyCode ==13) {
+                        login()
+                    }
+                });
+            });
             {% if msg %}
                 alert("{{ msg }}")
             {% endif %}
