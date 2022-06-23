@@ -75,11 +75,12 @@
 
     <script>
         const today = toStringByFormatting(new Date(), ',')
-        /* 테스트 실행 에러로 인한 주석처리
-        let id_data = {{ data.id|tojson }}
-*/
+        let id_data = {{ data.id|tojson }};
+
+
         $(document).ready(function () {
             show_comment();
+
         });
 
         function leftPad(value) {
@@ -237,7 +238,6 @@
 
             let title = $('#context-title').val()
             let comment = $('#summernote').val()
-
             let id = id_data
             let date = today
 
@@ -246,12 +246,13 @@
             // 할일: array_todo [todo_give]
             // id값 : id_data [id_give]
             // 오늘 날짜 : date [date_give]
-
             $.ajax({
                 type: 'POST',
                 url: '/upload',
+                traditional :true,
                 data: {title_give: title, comment_give: comment, todo_give: array_todo, id_give: id, date_give: date},
                 success: function (response) {
+                    console.log(this.data)
                     console.log(response)
                     alert(response['msg'])
                     window.location.reload()
@@ -263,10 +264,18 @@
             console.log("수정: ",num);
         }
 
-        function delet_note(num){
-            console.log("삭제:",num);
-        }
+        function delete_note(num){
+            $.ajax({
+                type: "POST",
+                url: "/api/delete",
+                data: {num_give:num},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
 
+        }
         function more_context(num) {
             if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
                 if (typeof open_note == "number") {
@@ -332,7 +341,7 @@
                                                             class="fa-solid fa-pen"></i>
                                                     </button>
                                                     <!-- >> 삭제버튼 기능추가 해야함 -->
-                                                    <button type="button" class="del_bt btn btn-danger ml-1" onclick="delet_note(${count})" style="display:none"><i
+                                                    <button type="button" class="del_bt btn btn-danger ml-1" onclick="delete_note(${count})" style="display:none"><i
                                                             class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                     <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(${count})"
@@ -366,236 +375,6 @@
     </div>
     <div id="comment-list">
         <!-- 노트1 추가 -->
-        <div class="card border-dark mb-3" id="item_note_0">
-            <div class="card-header">
-                <!-- 노트 상단 왼쪽 -->
-                <div class="note-top-day ml-2">Day 02</div>
-                <!-- 노트 상단 오른쪽 -->
-                <div class="note-top-title ml-2">
-                    <div>22.6.21 PM 18:30</div>
-                    <div>나는 제목이다</div>
-                </div>
-            </div>
-            <div class="card-body text-dark note-bottom">
-                <!-- 노트 내용이 들어가는 부분 -->
-                <div class="card-text ml-1 mr-1">
-                    동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리
-                    기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이
-                    보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 삼천리 화려 강산대한 사람
-                    대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
-                </div>
-
-                <div class="todo-note-list mt-4" style="display:none">
-
-
-                    <div class="list-group">
-    <!--TODO가 없을때 상단 표시-->
-                        <h7 class="todo-notice ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-bullhorn"></i> 지금 TO DO LIST 를 만들어보세요!</i></h7>
-    <!--TODO가 있을때 상단 표시-->
-                        <h3 class="todo-logo ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-pen-to-square"> TO DO LIST</i></h3>
-    <!--TODO추가구역 시작-->
-    <!--todoitem 시작-->
-                        <div class="list-group-item todo-item todo-active" aria-current="true" todo-num="1">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="2">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝/시작-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="3">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝/시작-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="4">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-   <!--TODO추가구역 끝-->
-                    </div>
-                </div>
-                <!-- 노트 버튼 (수정/삭제/감추기/더보기) -->
-                <div class="note-button ml-3 mt-2">
-                    <!-- >> 수정버튼 기능추가 해야함 -->
-                    <button type="button" onclick="modify_note(0)" class="edit_bt btn btn-primary ml-1" style="display:none"><i
-                            class="fa-solid fa-pen"></i>
-                    </button>
-                    <!-- >> 삭제버튼 기능추가 해야함 -->
-                    <button type="button" onclick="delet_note(0)" class="del_bt btn btn-danger ml-1" style="display:none"><i
-                            class="fa-solid fa-trash-can" ></i>
-                    </button>
-                    <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(0)"
-                            style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
-                    </button>
-                    <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(0)"
-                            style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 노트 2 추가 -->
-        <div class="card border-dark mb-3" id="item_note_1">
-            <div class="card-header">
-                <div class="note-top-day ml-2">Day 02</div>
-                <div class="note-top-title ml-2">
-                    <div>22.6.21 PM 18:30</div>
-                    <div>나는 제목이다</div>
-                </div>
-            </div>
-            <div class="card-body text-dark note-bottom">
-                <div class="card-text ml-1 mr-1">
-                    동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.남산 위에 저 소나무, 철갑을 두른 듯바람 서리 불변함은 우리
-                    기상일세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이
-                    보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세 삼천리 화려 강산대한 사람
-                    대한으로 길이 보전하세 대한으로 길이 보전하세.가을 하늘 공활한데 높고 구름 없이밝은 달은 우리 가슴 일편단심일세.무궁화 삼천리 화려 강산대한 사람 대한으로 길이 보전하세
-                </div>
-
-                <div class="todo-note-list mt-4" style="display:none">
-                    <div class="list-group">
-    <!--TODO가 없을때 상단 표시-->
-                        <h7 class="todo-notice ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-bullhorn"></i> 지금 TO DO LIST 를 만들어보세요!</i></h7>
-    <!--TODO가 있을때 상단 표시-->
-                        <h3 class="todo-logo ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-pen-to-square"> TO DO LIST</i></h3>
-    <!--TODO추가구역 시작-->
-    <!--todoitem 시작-->
-                        <div class="list-group-item todo-item todo-active" aria-current="true" todo-num="1">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="2">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝/시작-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="3">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝/시작-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="4">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-   <!--TODO추가구역 끝-->
-                    </div>
-                </div>
-                <div class="note-button ml-3 mt-2">
-                    <button type="button" onclick="modify_note(1)" class="edit_bt btn btn-primary ml-1" style="display:none"><i
-                            class="fa-solid fa-pen" ></i>
-                    </button>
-                    <button type="button" onclick="delet_note(1)" class="del_bt btn btn-danger ml-1" style="display:none"><i
-                            class="fa-solid fa-trash-can" ></i>
-                    </button>
-                    <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(1)"
-                            style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
-                    </button>
-                    <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(1)"
-                            style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 노트 3 추가 -->
-        <div class="card border-dark mb-3" id="item_note_2">
-            <div class="card-header">
-                <div class="note-top-day ml-2">Day 02</div>
-                <div class="note-top-title ml-2">
-                    <div>22.6.21 PM 18:30</div>
-                    <div>나는 제목이다</div>
-                </div>
-            </div>
-            <div class="card-body text-dark note-bottom">
-                <div class="card-text ml-1 mr-1">
-                    동해 물과 백두산이 마르고 닳도록하느님이 보우하사 우리나라 만세.무궁화 삼천리 화려 강산대한 사람, 대한으로 길이 보전하세.
-                </div>
-                <div class="todo-note-list mt-4" style="display:none">
-                    <div class="list-group">
-    <!--TODO가 없을때 상단 표시-->
-                        <h7 class="todo-notice ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-bullhorn"></i> 지금 TO DO LIST 를 만들어보세요!</i></h7>
-    <!--TODO가 있을때 상단 표시-->
-                        <h3 class="todo-logo ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-pen-to-square"> TO DO LIST</i></h3>
-    <!--TODO추가구역 시작-->
-    <!--todoitem 시작-->
-                        <div class="list-group-item todo-item todo-active" aria-current="true" todo-num="1">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="2">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝/시작-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="3">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-    <!--todoitem 끝/시작-->
-                        <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="4">
-                            <div class="icon_state_todo">
-                                <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
-                                <div class="fa-solid fa-circle-minus mr-3" id="icon_yet" style="color:red"> 아직...</div>
-                            </div>
-                            <span class="todo-item-text">The current link item</span>
-                        </div>
-   <!--TODO추가구역 끝-->
-                    </div>
-                </div>
-                <div class="note-button ml-3 mt-2">
-                    <button type="button" onclick="modify_note(2)" class="edit_bt btn btn-primary ml-1" style="display:none"><i
-                            class="fa-solid fa-pen" ></i>
-                    </button>
-                    <button type="button" onclick="delet_note(2)" class="del_bt btn btn-danger ml-1" style="display:none"><i
-                            class="fa-solid fa-trash-can" ></i>
-                    </button>
-                    <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(2)"
-                            style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
-                    </button>
-                    <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(2)"
-                            style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
-                    </button>
-                </div>
-            </div>
-        </div>
 
 
     </div>

@@ -51,17 +51,28 @@ def upload():
     id_receive = request.form['id_give']
     date_receive = request.form['date_give']
     count = len(comment_list)
+    todo_receive = request.form['todo_give']
+
     doc = {
         'title': title_receive,
         'comment': comment_receive,
         'id': id_receive,
         'date:': date_receive,
-        'count': count
+        'count': count,
+        'todo_give': todo_receive,
     }
     db.thread.insert_one(doc)
-
     return jsonify({'msg': '게시 완료'})
 
+
+@app.route("/api/delete", methods=["POST"])
+def delete():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    num_receive = int(request.form['num_give'])
+    db.thread.delete_one({'$and':[{"id": payload['id']},{'count':num_receive}]})
+    db.thread.update_many({'$and':[{"id": payload['id']},{"count":{'$gt':num_receive}}]},{'$inc':{"count":-1}})
+    return jsonify({'msg': '삭제완료!'})
 
 
 @app.route('/login')
