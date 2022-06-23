@@ -318,7 +318,7 @@
     <h1> {{ data.nick }}님의 CODIARY</h1>
     <button class="button is-danger" onclick="sign_out()">로그아웃하기</button>
 </nav>
-<main id="comment-list">
+<main>
     <div class="search-box">
         <input id="input-word" class="form-control" style="margin-right: 0.5rem">
         <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i>
@@ -340,8 +340,14 @@
 
 
 
-</main>
 
+    <div id="comment-list">
+
+
+
+    </div>
+
+</main>
 
 <footer>
     <!-- 게시물 쓰기 버튼, 클릭시 모달 창 띄움 -->
