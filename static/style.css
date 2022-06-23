@@ -431,6 +431,11 @@ img {border: none; max-width: 100%}
     margin: 50px auto;
     max-width: 700px;
 }
+
+.modal-backdrop show{
+    z-index: -1;
+}
+
 .share-box{
 
 
