@@ -345,3 +345,23 @@ tr.highlight a { color: white;
             'GRAD' 0,
             'opsz' 48
 }
+.btn-float {
+    width:3rem;
+    float:right;
+    background-color:#fffcf7;
+    border:1px solid darkgray;
+    border-radius : 5px;
+}
+
+.sumone {
+    display:flex;
+    justify-items:flex-start;
+}
+
+.is-danger {
+    color: #ff8080;
+}
+.is-success {
+    color: #3bafff;
+}
+
