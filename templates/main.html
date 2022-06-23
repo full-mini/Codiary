@@ -131,11 +131,25 @@
             });
         }
     
-           //투두리스트
-            $(document).ready(function () {
+        $(document).ready(function () {
                 $('#todo-input').keydown(function (key) {
                     if (key.keyCode == 13) {
                         add_todo()
+                    }
+                });
+                $(".todo-item").click(function () {
+                    let className = $(this).attr("class");
+                    let todo_num = $(this).attr("todo-num");
+                    if (className.includes('active')) {
+                        // Todo취소
+                        $(this).removeClass('todo-active');
+                        $(this).addClass('todo-none');
+                        console.log(open_note, todo_num)
+                    } else if (className.includes('todo-none')) {
+                        // Todo완료
+                        $(this).removeClass('todo-none');
+                        $(this).addClass('todo-active');
+                        console.log(open_note, todo_num)
                     }
                 });
             });
@@ -156,21 +170,7 @@
             }
             */
 
-            $(".todo-item").click(function() {
-               let className = $(this).attr("class");
-               let todo_num = $(this).attr("todo-num");
-               if (className.includes('active')){
-                   // Todo취소
-                   $(this).removeClass('todo-active');
-                   $(this).addClass('todo-none');
-                   console.log(open_note,todo_num)
-               } else if (className.includes('todo-none')) {
-                   // Todo완료
-                   $(this).removeClass('todo-none');
-                   $(this).addClass('todo-active');
-                   console.log(open_note,todo_num)
-               }
-            });
+
        
 
         function delet_todo(num) {
