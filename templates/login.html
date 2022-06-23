@@ -11,16 +11,12 @@
 
         <!-- Bulma CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-        <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">
         <link rel="stylesheet" href="../static/style.css">
-
-
-
 
 
         <style>
@@ -31,6 +27,20 @@
         </style>
 
         <script>
+                    $(document).ready(function () {
+                $('#userid').keydown(function (key) {
+                    if (key.keyCode ==13) {
+                        $("#userpw").focus()
+                    }
+                });
+            });
+            $(document).ready(function () {
+                $('#userpw').keydown(function (key) {
+                    if (key.keyCode ==13) {
+                        login()
+                    }
+                });
+            });
             {% if msg %}
                 alert("{{ msg }}")
             {% endif %}
@@ -46,8 +56,6 @@
                     data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
                     success: function (response) {
                         if (response['result'] == 'success') {
-                            // 로그인이 정상적으로 되면, 토큰을 받아옵니다.
-                            // 이 토큰을 mytoken이라는 키 값으로 쿠키에 저장합니다.
                             $.cookie('mytoken', response['token']);
 
                             alert('로그인 완료!')
@@ -68,6 +76,7 @@
         </script>
     </head>
     <body>
+    <div class="wrapper">
     <a href="http://runedemon.shop/"><img src="static/Logo2.png"/></a>
         <div class="section has-text-centered">
             <h1 class="title">로그인 페이지</h1>
@@ -102,6 +111,7 @@
             </div>
         </div>
 
+        </div>
         </div>
     </body>
 </html>
