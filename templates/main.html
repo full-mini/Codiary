@@ -170,23 +170,20 @@
                 });
             });
 
-            /*
-            //차순 정렬
-{#console.log(data.sort(date_ascending)); // 오름차순#}
-            function date_ascending(a, b) {
-                var dateA = new Date(a['날짜']).getTime();
-                var dateB = new Date(b['날짜']).getTime();
-                return dateA > dateB ? 1 : -1;
-            }
-            {#console.log(data.sort(date_descending)) // 내림차순#}
-            function date_descending(a, b) {
-                var dateA = new Date(a['날짜']).getTime();
-                var dateB = new Date(b['날짜']).getTime();
-                return dateA < dateB ? 1 : -1;
-            }
-            */
 
-
+           //차순 정렬
+            console.log(data.sort(date_sort)); // 오름차순
+           function date_sort(a, b) {
+               var dateA = new Date(a['날짜']).getTime();
+               var dateB = new Date(b['날짜']).getTime();
+               return dateA > dateB ? 1 : -1;
+           }
+            console.log(data.sort(date_sort)); // 내림차순
+           function date_sort(a, b) {
+               var dateA = new Date(a['날짜']).getTime();
+               var dateB = new Date(b['날짜']).getTime();
+               return dateA < dateB ? 1 : -1;
+           }
 
 
             function delet_todo(num) {
@@ -385,17 +382,14 @@
         <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png" style="height:30px; alt=""></button>
         <button type="button" id="shareKt" onclick="sharekakaotalk('kakaotalk')" >
                     <img src="static/kakaotalk.png" style="height:30px; alt=""></button>
-
-        </ul>
-
     </div>
 
     </div>
     <div id="comment-list">
         <!-- 차순 추가 -->
         <div>
-            <button type="button" id="filter"><img src="static/filter.png"
-                                                   style="height:30px;alt="></button>
+            <button type="button" id="sort" onclick="date_sort()"><img src="static/sort.png"
+                                                   style="height:30px; float: right;"></button>
         </div>
         <!-- 노트1 추가 -->
         <div class="card border-dark mb-3" id="item_note_0">
