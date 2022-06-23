@@ -374,44 +374,26 @@
     <button class="button is-danger" onclick="logout()">로그아웃하기</button>
 </nav>
 <main>
-    <div class="search-box d-flex justify-content-center">
+    <div class="search-box">
         <input id="input-word" class="form-control" style="margin-right: 0.5rem">
         <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i>
-
-            <button type="button" id="shareTw" onclick="sharetwitter()"><img src="static/twitter.png"
-                                                                             style="height:30px;  alt=" 트위터">
-            </button>
-            <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png"
-                                                                              style="height:30px; alt=" 페북">
-            </button>
-            <button type="button" id="shareKt" onclick="sharekakaotalk('kakaotalk')"><img src="static/kakaotalk.png"
-                                                                                          style="height:30px; alt= " 카톡">
-            </button>
-        </button>
-    </div>
-    <div class="share-box">
-        <button type="button" id="shareTw" onclick="sharetwitter()"><img src="static/twitter.png"
-                                                                         style="height:30px;  alt=" 트위터">
-        </button>
-        <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png"
-                                                                          style="height:30px; alt=" 페북">
-        </button>
-        <button type="button" id="shareKt" onclick="sharekakaotalk('kakaotalk')"><img src="static/kakaotalk.png"
-                                                                                      style="height:30px; alt=" 카톡">
         </button>
     </div>
 
+    <div>
+        <button type="button" id="shareTw" onclick="sharetwitter()">
+            <img src="static/twitter.png"
+                 style="height:32px;  alt=" 트위터"></button>
+        <button type="button" id="shareFb" onclick="sharefacebook()">
+            <img src="static/facebook.png"
+                 style="height:32px; alt=" 페북"></button>
+        <button type="button" id="shareKt" onclick="sharekakaotalk('kakaotalk')">
+            <img src="static/kakaotalk.png"
+                 style="height:32px; alt= " 카톡">
+        </button>
     </div>
-    <div id="comment-list">
-        <!-- 차순 추가 -->
-        <div>
-            <button type="button" id="filter"><img src="static/filter.png"
-                                                   style="height:30px;alt="></button>
-        </div>
-        <!-- 노트1 추가 -->
 
 
-    </div>
 
 </main>
 

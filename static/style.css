@@ -317,8 +317,9 @@ footer {
 
 img {border: none; max-width: 100%}
 
-#shareFb,#shareKt,#shareTw,#sort{border: 0; outline: 0;
-    background-color: transparent; height:30px;}
+#shareFb,#shareKt,#shareTw{
+    border: 0; outline: 0;
+    background-color: transparent;}
 
 
 
@@ -437,6 +438,8 @@ img {border: none; max-width: 100%}
 .search-box { width: 70%;
     margin: 50px auto;
     max-width: 700px;
+    display: flex;
+
 }
 
 .modal-backdrop show{
@@ -444,8 +447,6 @@ img {border: none; max-width: 100%}
 }
 
 .share-box{
-
-
 
 }
 .share-box > button{
