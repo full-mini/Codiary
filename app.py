@@ -17,6 +17,8 @@ import jwt
 # 토큰에 만료시간을 줘야하기 때문에, datetime 모듈도 사용합니다.
 import datetime
 
+
+import json
 # 회원가입 시엔, 비밀번호를 암호화하여 DB에 저장해두는 게 좋습니다.
 # 그렇지 않으면, 개발자(=나)가 회원들의 비밀번호를 볼 수 있으니까요.^^;
 import hashlib
@@ -51,7 +53,8 @@ def upload():
     id_receive = request.form['id_give']
     date_receive = request.form['date_give']
     count = len(comment_list)
-    todo_receive = request.form['todo_give']
+    sendBases = request.form["sendBases"]
+    todo_give = json.loads(sendBases)
 
     doc = {
         'title': title_receive,
@@ -59,7 +62,7 @@ def upload():
         'id': id_receive,
         'date:': date_receive,
         'count': count,
-        'todo_give': todo_receive,
+        'todo_give': todo_give,
     }
     db.thread.insert_one(doc)
     return jsonify({'msg': '게시 완료'})
@@ -101,7 +104,6 @@ def main():
 def comment_get():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    print(payload)
     comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
     return jsonify({'comments':comment_list})
 

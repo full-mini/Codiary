@@ -246,18 +246,24 @@
             // 할일: array_todo [todo_give]
             // id값 : id_data [id_give]
             // 오늘 날짜 : date [date_give]
+            jQuery.ajaxSettings.traditional = true;
             $.ajax({
                 type: 'POST',
                 url: '/upload',
-                traditional :true,
-                data: {title_give: title, comment_give: comment, todo_give: array_todo, id_give: id, date_give: date},
+                data: {
+                    title_give: title,
+                    comment_give: comment,
+                    sendBases: [JSON.stringify({todo_give: array_todo})],
+                    id_give: id,
+                    date_give: date
+                },
                 success: function (response) {
-                    console.log(this.data)
                     console.log(response)
                     alert(response['msg'])
                     window.location.reload()
                 }
             })
+
         }
 
         function modify_note(num) {
