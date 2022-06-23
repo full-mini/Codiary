@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">
-
+      <!-- favicon -->
     <!-- google icon -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
@@ -104,6 +104,20 @@
         let writing = false;
         let array_todo = [];
         let array_num = 0;
+
+        //검색기능
+        function find_word() {
+            let word = $("#input-word").val().toLowerCase();
+            if (word == "") {
+                // 빈 문자열이면 얼럿
+               alert("please write something first :)")
+               return } if (word_list.includes(word)) {
+                // 리스트에 있으면 하이라이트
+                $(`#word-${word}`).addClass('highlight').siblings().removeClass('highlight');
+            $(`#word-${word}`)[0].scrollIntoView();
+            }
+        }
+
 
         //트위터로 공유하기
         function sharetwitter() {
