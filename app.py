@@ -17,6 +17,8 @@ import jwt
 # 토큰에 만료시간을 줘야하기 때문에, datetime 모듈도 사용합니다.
 import datetime
 
+
+import json
 # 회원가입 시엔, 비밀번호를 암호화하여 DB에 저장해두는 게 좋습니다.
 # 그렇지 않으면, 개발자(=나)가 회원들의 비밀번호를 볼 수 있으니까요.^^;
 import hashlib
@@ -43,7 +45,6 @@ def home():
 def upload():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    print(payload)
     comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
 
     title_receive = request.form['title_give']
@@ -51,17 +52,29 @@ def upload():
     id_receive = request.form['id_give']
     date_receive = request.form['date_give']
     count = len(comment_list)
+    sendBases = request.form["sendBases"]
+    todo_give = json.loads(sendBases)
+
     doc = {
         'title': title_receive,
         'comment': comment_receive,
         'id': id_receive,
         'date:': date_receive,
-        'count': count
+        'count': count,
+        'todo_give': todo_give,
     }
     db.thread.insert_one(doc)
-
     return jsonify({'msg': '게시 완료'})
 
+
+@app.route("/api/delete", methods=["POST"])
+def delete():
+    token_receive = request.cookies.get('mytoken')
+    payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+    num_receive = int(request.form['num_give'])
+    db.thread.delete_one({'$and':[{"id": payload['id']},{'count':num_receive}]})
+    db.thread.update_many({'$and':[{"id": payload['id']},{"count":{'$gt':num_receive}}]},{'$inc':{"count":-1}})
+    return jsonify({'msg': '삭제완료!'})
 
 
 @app.route('/login')
@@ -90,7 +103,6 @@ def main():
 def comment_get():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    print(payload)
     comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
     return jsonify({'comments':comment_list})
 
@@ -167,7 +179,6 @@ def api_login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=3600)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        print(payload,token)
 
         # token을 줍니다.
         return jsonify({'result': 'success', 'token': token})
@@ -191,7 +202,6 @@ def api_valid():
         # token을 시크릿키로 디코딩합니다.
         # 보실 수 있도록 payload를 print 해두었습니다. 우리가 로그인 시 넣은 그 payload와 같은 것이 나옵니다.
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        print(payload)
 
         # payload 안에 id가 들어있습니다. 이 id로 유저정보를 찾습니다.
         # 여기에선 그 예로 닉네임을 보내주겠습니다.
