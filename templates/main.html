@@ -48,7 +48,11 @@
     <!--<link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">-->
 
     <!-- 로컬에서 CSS 가져오기-->
+<<<<<<<<< Temporary merge branch 1
+    <link href="../static/style.css" rel="stylesheet" type="text/css"/>
+=========
     <link href="/static/style.css" rel="stylesheet" type="text/css"/>
+>>>>>>>>> Temporary merge branch 2
 
     <script>
         $(document).ready(function () {
@@ -108,8 +112,9 @@
         let writing = false;
         let array_todo = [];
         let array_num = 0;
+>>>>>>>>> Temporary merge branch 2
 
-        
+
         //페이스북 공유하기
         $(document).ready(function () {
             const btnShareFb = document.querySelector('#shareFb');
@@ -129,17 +134,32 @@
                 container: '#shareKt',
                 templateId: 78517, // 나의 앱 ID 작성
             });
+<<<<<<<<< Temporary merge branch 1
         }
-    
-           //투두리스트
-            $(document).ready(function () {
+
+        $(document).ready(function () {
                 $('#todo-input').keydown(function (key) {
                     if (key.keyCode == 13) {
                         add_todo()
                     }
                 });
+                $(".todo-item").click(function () {
+                    let className = $(this).attr("class");
+                    let todo_num = $(this).attr("todo-num");
+                    if (className.includes('active')) {
+                        // Todo취소
+                        $(this).removeClass('todo-active');
+                        $(this).addClass('todo-none');
+                        console.log(open_note, todo_num)
+                    } else if (className.includes('todo-none')) {
+                        // Todo완료
+                        $(this).removeClass('todo-none');
+                        $(this).addClass('todo-active');
+                        console.log(open_note, todo_num)
+                    }
+                });
             });
-            
+
             /*
             //차순 정렬
             {#console.log(data.sort(date_ascending)); // 오름차순#}
@@ -156,22 +176,8 @@
             }
             */
 
-            $(".todo-item").click(function() {
-               let className = $(this).attr("class");
-               let todo_num = $(this).attr("todo-num");
-               if (className.includes('active')){
-                   // Todo취소
-                   $(this).removeClass('todo-active');
-                   $(this).addClass('todo-none');
-                   console.log(open_note,todo_num)
-               } else if (className.includes('todo-none')) {
-                   // Todo완료
-                   $(this).removeClass('todo-none');
-                   $(this).addClass('todo-active');
-                   console.log(open_note,todo_num)
-               }
-            });
-       
+
+
 
         function delet_todo(num) {
             if (writing && array_todo[num] != '') {
@@ -606,6 +612,7 @@
             <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
         </div>
     </div>
+>>>>>>>>> Temporary merge branch 2
 
 </main>
 
