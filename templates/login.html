@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en">
-    <head>
 
+<html lang="en" style="background: ivory; display: flex; align-content: center; justify-content: center; height: 90%; width: 100%">
+    <head>
         <!-- Webpage Title !!-->
         <title>코디어리</title>
 
@@ -75,13 +75,13 @@
 
         </script>
     </head>
-    <body>
+    <body style="display: flex; flex-direction: column; align-items: center; justify-content: center">
     <div class="wrapper">
     <a href="http://runedemon.shop/"><img src="static/Logo2.png"/></a>
-        <div class="section has-text-centered">
-            <h1 class="title">로그인 페이지</h1>
-            <div class="container" style="width:50%">
-                <div class="login-box"><div class="field is-horizontal">
+        <div class="login-page">
+                <div class="login-box" style="border-radius: 4rem">
+                    <div class="login-title">로그인 페이지</div>
+                    <div class="login-area">
                         <div class="field-label is-normal">
                             <label class="label" for="userid">ID</label>
                         </div>
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field is-horizontal">
+                    <div class="login-area">
                         <div class="field-label is-normal">
                             <label class="label" for="userpw">PW</label>
                         </div>
@@ -106,11 +106,11 @@
                             </div>
                         </div>
                     </div>
-                <button class="button is-primary" onclick="login()">로그인</button>
-                <button class="button is-primary" onclick="gotoregister()">회원가입</button>
-            </div>
-        </div>
-
+                    <div class="loginbt_box">
+                        <button class="loginbt button is-primary" onclick="login()">로그인</button>
+                        <button class="loginbt button is-primary" onclick="gotoregister()">회원가입</button>
+                    </div>
+                </div>
         </div>
         </div>
     </body>

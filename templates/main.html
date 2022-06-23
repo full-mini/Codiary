@@ -100,7 +100,6 @@
 
         let open_note = false;
         let writing = false;
-        let array_todo = [];
         let array_num = 0;
 
         //트위터로 공유하기
@@ -149,62 +148,6 @@
             }
         }
 
-        $(document).ready(function () {
-            $('#todo-input').keydown(function (key) {
-                if (key.keyCode == 13) {
-                    add_todo()
-                }
-            });
-            $(".todo-item").click(function () {
-                let className = $(this).attr("class");
-                let todo_num = $(this).attr("todo-num");
-                if (className.includes('active')) {
-                    // Todo취소
-                    $(this).removeClass('todo-active');
-                    $(this).addClass('todo-none');
-                    console.log(open_note, todo_num)
-                } else if (className.includes('todo-none')) {
-                    // Todo완료
-                    $(this).removeClass('todo-none');
-                    $(this).addClass('todo-active');
-                    console.log(open_note, todo_num)
-                }
-            });
-        });
-
-        function delet_todo(num) {
-            if (writing && array_todo[num] != '') {
-                array_todo[num] = '';
-                let child_element = document.getElementById(`todo_child_${num}`);
-                child_element.remove();
-            }
-        }
-
-        function add_todo() {
-            if (writing) {
-                let todo_text = ($('#todo-input').val()).trim()
-
-                if (todo_text != "") {
-                    let temp_html = `<li class="todo_child list-group-item" id="todo_child_${array_num}">
-                                        <strong class="todo_child-context">${todo_text}</strong>
-
-                                        <div class="todo_child-bts">
-                                            <button type="button" class="btn btn-danger" onclick="delet_todo(${array_num})">삭제</button>
-                                        </div>
-
-                                    </li>`
-                    array_todo.push(todo_text)
-                    array_num += 1
-                    console.log(array_num, array_todo)
-                    $('#todo-input').val('');
-                    $('#todo_parent').append(temp_html);
-                    alert("To-do 리스트에 추가 되었습니다.")
-                    $('#todo-input').focus();
-                }
-            }
-        }
-
-
         function toStringByFormatting(source, delimiter = '-') {
             const year = source.getFullYear();
             const month = leftPad(source.getMonth() + 1);
@@ -227,12 +170,6 @@
                 return;
             }
 
-            //<!-- Todo리스트 있는지 확인 후 빈 값 지우고 array_todo 로 다시 저장하기 -->
-            if (array_todo.length > 0) {
-                array_todo = array_todo.filter(function (item) {
-                    return item !== null && item !== undefined && item !== '';
-                });
-            }
             let title = $('#context-title').val()
             let comment = $('#summernote').val()
             let id = id_data
@@ -240,7 +177,6 @@
 
             // 제목: title [title_give]
             // 내용 : comment [comment_give]
-            // 할일: array_todo [todo_give]
             // id값 : id_data [id_give]
             // 오늘 날짜 : date [date_give]
             jQuery.ajaxSettings.traditional = true;
@@ -250,7 +186,6 @@
                 data: {
                     title_give: title,
                     comment_give: comment,
-                    sendBases: [JSON.stringify({todo_give: array_todo})],
                     id_give: id,
                     date_give: date
                 },
@@ -289,7 +224,6 @@
                     document.getElementsByClassName("hide_bt")[open_note].style.display = "none";
                     document.getElementsByClassName("edit_bt")[open_note].style.display = "none";
                     document.getElementsByClassName("del_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("todo-note-list")[open_note].style.display = "none";
                 }
                 document.getElementsByClassName("card-text")[num].style.height = "100%";
                 document.getElementsByClassName("card-text")[num].style.display = "block";
@@ -297,7 +231,6 @@
                 document.getElementsByClassName("hide_bt")[num].style.display = "block";
                 document.getElementsByClassName("edit_bt")[num].style.display = "block";
                 document.getElementsByClassName("del_bt")[num].style.display = "block";
-                document.getElementsByClassName("todo-note-list")[num].style.display = "block";
                 open_note = num;
             } else {
                 document.getElementsByClassName("card-text")[num].style.height = "72px";
@@ -306,7 +239,6 @@
                 document.getElementsByClassName("hide_bt")[num].style.display = "none";
                 document.getElementsByClassName("edit_bt")[num].style.display = "none";
                 document.getElementsByClassName("del_bt")[num].style.display = "none";
-                document.getElementsByClassName("todo-note-list")[num].style.display = "none";
             }
         }
 
@@ -372,7 +304,7 @@
     <button class="button is-danger" onclick="sign_out()">로그아웃하기</button>
 </nav>
 <main>
-    <div class="search-box d-flex justify-content-center">
+    <div class="search-box d-flex">
         <input id="input-word" class="form-control" style="margin-right: 0.5rem">
         <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i>
 
@@ -424,17 +356,6 @@
         <div class="write-modal">
             <div class="write-header">
                 <div class="write-nav">
-                    <div class="todo-area form-floating">
-                        <input type="text" class="form-control todo-input" id="todo-input" placeholder="todo"
-                               style="ime-mode:active;">
-                        <label for="todo-input">오늘 할 일을 우선 계획해보세요!</label>
-                        <button type="button" class="btn btn-success ml-2" onclick="add_todo()">추가</button>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="todo_parent mt-1" id="todo_parent">
-
-                        </ul>
-                    </div>
                 </div>
                 <div class="write-body">
                     <!-- 에디터 소스-->
@@ -483,21 +404,15 @@
         });
 
         $('.js-close').click(function () {
-            if ($('#context-title').val() != '' || !($('#summernote').val() == '' || $('#summernote').val() == '<p><br></p>') || array_todo.length != 0) {
+            if ($('#context-title').val() != '' || !($('#summernote').val() == '' || $('#summernote').val() == '<p><br></p>')) {
                 if (confirm("작성중이던 내용이 있습니다. 그래도 닫으시겠습니까?")) {
                     $('.write-area').removeClass('modal-open');
                     $(".write-footer-bt").css('display', 'none');
                     $("html").css('overflow-y', 'auto');
                     $(".write-body textarea").css('height', '150');
                     $('#context-title').val('');
-                    $('#todo-input').val('');
                     $('#summernote').summernote('reset');
-                    const todo_parent = document.querySelector(".todo_parent");
-                    array_todo = [];
                     array_num = 0;
-                    while (todo_parent.hasChildNodes()) {	// 부모노드가 자식이 있는지 여부를 알아낸다
-                        todo_parent.removeChild(todo_parent.firstChild);
-                    }
                     writing = false;
                 }
             } else {

@@ -52,16 +52,13 @@ def upload():
     id_receive = request.form['id_give']
     date_receive = request.form['date_give']
     count = len(comment_list)
-    sendBases = request.form["sendBases"]
-    todo_give = json.loads(sendBases)
 
     doc = {
         'title': title_receive,
         'comment': comment_receive,
         'id': id_receive,
         'date:': date_receive,
-        'count': count,
-        'todo_give': todo_give,
+        'count': count
     }
     db.thread.insert_one(doc)
     return jsonify({'msg': '게시 완료'})
