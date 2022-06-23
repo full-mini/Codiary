@@ -25,8 +25,6 @@
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
-    <!--<link rel="stylesheet" href=" https://full-mini.github.io/Codiary/templates/style.css">-->
-    <link href="../static/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://kit.fontawesome.com/b47588dd55.js" crossorigin="anonymous"></script>
     <!-- JS -->
     <!-- JS -->
@@ -272,10 +270,11 @@
 
 
         function delet_todo(num) {
-            /*              array에서 삭제한다.
-    전체를 비운다.
-    for문으로 다시 작성한다.
-    */
+            if(writing && array_todo[num] != '') {
+                array_todo[num]='';
+                let child_element = document.getElementById(`todo_child_${num}`);
+                child_element.remove();
+            }
         }
 
         function add_todo() {
@@ -283,7 +282,7 @@
                 let todo_text = ($('#todo-input').val()).trim()
 
                 if (todo_text != "") {
-                    let temp_html = `<li class="list-group-item">
+                    let temp_html = `<li class="list-group-item" id="todo_child_${array_num}">
                                     <strong class="list-group-item-context">${todo_text}</strong>
 
                                     <div class="list-group-item-bts">
@@ -291,7 +290,6 @@
                                     </div>
 
                                     </li>`
-                    $.ajax({});
                     array_todo.push(todo_text)
                     array_num += 1
                     console.log(array_num, array_todo)
@@ -367,12 +365,15 @@
                 </div>
             </div>
             <div class="write-footer">
-                <div class="write-complete">
-                    <button type="button" class="btn btn-success mt-2" onclick="save_comment()">작성하기</button>
+                <div class="write-footer-bt">
+                    <div class="write-complete">
+                        <button type="button" class="btn btn-success mt-2" onclick="save_comment()">작성하기</button>
+                    </div>
+                    <div class="js-close">
+                        <button type="button" class="btn btn-danger mt-2">닫기</button>
                 </div>
-                <div class="js-close">
-                    <button type="button" class="btn btn-danger mt-2">닫기</button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -393,7 +394,7 @@
         $('.js-click').click(function () {
             $('.write-area').addClass('modal-open');
             $("html").css('overflow-y', 'hidden');
-            $(".write-footer").css('display', 'flex');
+            $(".write-footer-bt").css('display', 'flex');
 
             writing = true;
         });
@@ -403,6 +404,7 @@
                 if (confirm("작성중이던 내용이 있습니다. 그래도 닫으시겠습니까?")) {
                     $(".write-footer").css('display', 'none');
                     $('.write-area').removeClass('modal-open');
+                    $(".write-footer-bt").css('display', 'none');
                     $("html").css('overflow-y', 'auto');
                     $(".write-body textarea").css('height', '150');
                     $('#context-title').val('');
@@ -418,8 +420,8 @@
                 }
             } else {
                 $('.write-area').removeClass('modal-open');
+                $(".write-footer-bt").css('display', 'none');
                 $("html").css('overflow-y', 'auto');
-                $(".write-footer").css('display', 'none');
                 writing = false;
             }
         });
