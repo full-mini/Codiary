@@ -18,7 +18,7 @@
 
     <!-- google icon -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <!-- kakotalk share -->
+    <!-- kakaotalk share -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
     <!-- Bulma CSS -->
@@ -124,7 +124,7 @@
         //카카오톡 공유하기
         function sharekakaotalk(sns) {
             var thisUrl = document.URL;
-            var snsTitle = "2021 웹진 [봄]";
+            var snstitle = "Codiary";
 
             if (sns == 'kakaotalk') {
                 // 사용할 앱의 JavaScript 키 설정
@@ -136,11 +136,11 @@
                     objectType: 'feed',
                     content: {
                         title: "Codiary", // 보여질 제목
-                        description: "코드+다이어리", // 보여질 설명
-                        imageUrl: "https://developers.kakao.com/", // 콘텐츠 URL
+                        description: "개발자의 다이어리", // 보여질 설명
+                        imageUrl: thisUrl, // 콘텐츠 URL
                         link: {
-                            mobileWebUrl: "https://developers.kakao.com/",
-                            webUrl: "https://developers.kakao.com/"
+                            mobileWebUrl: thisUrl,
+                            webUrl: thisUrl
                         }
                     }
                 });
@@ -383,7 +383,11 @@
     <div class="share-box">
         <button type="button" id="shareTw" onclick="sharetwitter()"><img src="static/twitter.png" style="height:30px;  alt=""></button>
         <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png" style="height:30px; alt=""></button>
-        <button type="button" id="shareKt" onclick="sharekakaotalk()"><img src="static/kakaotalk.png" style="height:30px; alt=""></button>
+        <button type="button" id="shareKt" onclick="sharekakaotalk('kakaotalk')" >
+                    <img src="static/kakaotalk.png" style="height:30px; alt=""></button>
+
+        </ul>
+
     </div>
 
     </div>
