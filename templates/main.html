@@ -174,23 +174,6 @@
             });
         });
 
-        /*
-        //차순 정렬
-{#console.log(data.sort(date_ascending)); // 오름차순#}
-            function date_ascending(a, b) {
-                var dateA = new Date(a['날짜']).getTime();
-                var dateB = new Date(b['날짜']).getTime();
-                return dateA > dateB ? 1 : -1;
-            }
-            {#console.log(data.sort(date_descending)) // 내림차순#}
-            function date_descending(a, b) {
-                var dateA = new Date(a['날짜']).getTime();
-                var dateB = new Date(b['날짜']).getTime();
-                return dateA < dateB ? 1 : -1;
-            }
-            */
-
-
         function delet_todo(num) {
             if (writing && array_todo[num] != '') {
                 array_todo[num] = '';

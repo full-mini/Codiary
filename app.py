@@ -45,7 +45,6 @@ def home():
 def upload():
     token_receive = request.cookies.get('mytoken')
     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    print(payload)
     comment_list = list(db.thread.find({"id": payload['id']}, {'_id': False}))
 
     title_receive = request.form['title_give']
@@ -180,7 +179,6 @@ def api_login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=3600)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        print(payload,token)
 
         # token을 줍니다.
         return jsonify({'result': 'success', 'token': token})
@@ -204,7 +202,6 @@ def api_valid():
         # token을 시크릿키로 디코딩합니다.
         # 보실 수 있도록 payload를 print 해두었습니다. 우리가 로그인 시 넣은 그 payload와 같은 것이 나옵니다.
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        print(payload)
 
         # payload 안에 id가 들어있습니다. 이 id로 유저정보를 찾습니다.
         # 여기에선 그 예로 닉네임을 보내주겠습니다.
