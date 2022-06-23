@@ -27,6 +27,20 @@
         </style>
 
         <script>
+                    $(document).ready(function () {
+                $('#userid').keydown(function (key) {
+                    if (key.keyCode ==13) {
+                        $("#userpw").focus()
+                    }
+                });
+            });
+            $(document).ready(function () {
+                $('#userpw').keydown(function (key) {
+                    if (key.keyCode ==13) {
+                        login()
+                    }
+                });
+            });
             {% if msg %}
                 alert("{{ msg }}")
             {% endif %}
@@ -62,6 +76,7 @@
         </script>
     </head>
     <body>
+    <div class="wrapper">
     <a href="http://runedemon.shop/"><img src="static/Logo2.png"/></a>
         <div class="section has-text-centered">
             <h1 class="title">로그인 페이지</h1>
@@ -96,6 +111,7 @@
             </div>
         </div>
 
+        </div>
         </div>
     </body>
 </html>

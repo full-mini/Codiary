@@ -492,3 +492,8 @@ tr.highlight a { color: white;
     color: #3bafff;
 }
 
+.wrapper {
+    width:100%;
+    max-width: 900px;
+    min-width: 250px;
+}
