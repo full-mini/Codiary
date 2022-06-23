@@ -15,14 +15,99 @@ nav {
 }
 
 main {
-    width: 100%;
-    margin-top: 0.5rem;
-    margin-bottom: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    position: relative;
+}
+
+#comment-list{
+    max-width: 80%;
+    min-width: 80%;
+    margin-top: 0.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#comment-list .card{
+    width: 100%;
+}
+
+.todo-note-list{
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.todo_item_area{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.todo-notice{
+    display: none;
+}
+
+.todo-logo{
+    display: block;
+}
+
+.todo-item{
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    align-items: center;
+}
+
+.todo-item:hover{
+    z-index: 2;
+    color: red;
+    background-color: greenyellow;
+    border: 2px solid red;
+}
+
+.todo-item.todo-active{
+    z-index: 0;
+    background-color: yellowgreen;
+    border-color: yellowgreen;
+}
+
+.todo-item.todo-active:hover{
+    z-index: 2;
+    color: green;
+    background-color: greenyellow;
+    border: 2px solid green;
+}
+
+.todo-item.todo-active #icon_success{
+    display: block;
+}
+
+.todo-item.todo-active #icon_yet{
+    display: none;
+}
+
+.todo-item.todo-none #icon_success{
+    display: none;
+}
+
+.todo-item.todo-none #icon_yet{
+    display: block;
+}
+
+.icon_state_todo{
+    min-width: 110px;
+    width: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .note-top-day {
@@ -149,23 +234,23 @@ footer {
     padding: 1em;
 }
 
-.list-group {
+.todo_parent {
     margin-bottom: 10px;
     -webkit-overflow-scrolling: touch;
 }
 
-.list-group-item {
+.todo_child {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.list-group-item-context{
+.todo_child-context{
     word-break:break-all;
 }
 
-.list-group-item-bts {
+.todo_child-bts {
     min-width: 60px;
     display: flex;
     flex-direction: row;
@@ -244,27 +329,46 @@ footer {
     height: 33px;
 }
 
-@media screen and (max-width: 40rem) {
+@media screen and (max-width: 75rem) {
+    #comment-list {
+        max-width: 100%;
+        min-width: 100%;
+    }
+    .todo-note-list{
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 60rem) {
     .btn {
         font-size: 0.9rem;
     }
     .todo-area label {
         font-size: 0.7rem;
     }
+    .todo-item{
+        flex-direction: column;
+        justify-items: center;
+        align-items: flex-start;
+    }
+    .icon_state_todo{
+        align-items: flex-start;
+    }
 }
-        .main-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 95%;
-            max-width: 500px;
-            padding: 20px;
-            margin: auto;
-        }
-        .search-box { width: 70%;
-            margin: 50px auto;
-            max-width: 700px;
+
+.main-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+}
+
+.search-box { width: 70%;
+    margin: 50px auto;
+    max-width: 700px;
 }
         tr.highlight > td { background-color: #0c5e81;
             color: white;
