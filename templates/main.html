@@ -18,7 +18,7 @@
 
     <!-- google icon -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-      <!-- kakotalk share -->
+    <!-- kakotalk share -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
     <!-- Bulma CSS -->
@@ -108,7 +108,7 @@
             let sendText = "공유 테스트";
             window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
         }
-        
+
         //페이스북 공유하기
         $(document).ready(function () {
             const btnShareFb = document.querySelector('#shareFb');
@@ -117,21 +117,37 @@
             })
         })
         function sharefacebook() {
-               let sendUrl = 'news.v.daum.net/v/20220319120213003';
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${sendUrl}`);
+            let sendUrl = 'news.v.daum.net/v/20220319120213003';
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${sendUrl}`);
         }
 
-            //카카오톡 공유하기
-        function sharekakaotalk() {
-            Kakao.init('7daa7d5fef046cea4ec3b64870f2c4d3');
+        //카카오톡 공유하기
+        function sharekakaotalk(sns) {
+            var thisUrl = document.URL;
+            var snsTitle = "2021 웹진 [봄]";
 
-            Kakao.Link.createCustomButton({
-                container: '#shareKt',
-                templateId: 78517, // 나의 앱 ID 작성
-            });
+            if (sns == 'kakaotalk') {
+                // 사용할 앱의 JavaScript 키 설정
+                Kakao.init('7daa7d5fef046cea4ec3b64870f2c4d3');
+
+                // 카카오링크 버튼 생성
+                Kakao.Link.createDefaultButton({
+                    container: '#shareKt', // HTML에서 작성한 ID값
+                    objectType: 'feed',
+                    content: {
+                        title: "Codiary", // 보여질 제목
+                        description: "코드+다이어리", // 보여질 설명
+                        imageUrl: "https://developers.kakao.com/", // 콘텐츠 URL
+                        link: {
+                            mobileWebUrl: "https://developers.kakao.com/",
+                            webUrl: "https://developers.kakao.com/"
+                        }
+                    }
+                });
+            }
         }
-    
-        $(document).ready(function () {
+
+            $(document).ready(function () {
                 $('#todo-input').keydown(function (key) {
                     if (key.keyCode == 13) {
                         add_todo()
@@ -153,10 +169,10 @@
                     }
                 });
             });
-            
+
             /*
             //차순 정렬
-            {#console.log(data.sort(date_ascending)); // 오름차순#}
+{#console.log(data.sort(date_ascending)); // 오름차순#}
             function date_ascending(a, b) {
                 var dateA = new Date(a['날짜']).getTime();
                 var dateB = new Date(b['날짜']).getTime();
@@ -171,22 +187,22 @@
             */
 
 
-       
 
-        function delet_todo(num) {
-            if (writing && array_todo[num] != '') {
-                array_todo[num] = '';
-                let child_element = document.getElementById(`todo_child_${num}`);
-                child_element.remove();
+
+            function delet_todo(num) {
+                if (writing && array_todo[num] != '') {
+                    array_todo[num] = '';
+                    let child_element = document.getElementById(`todo_child_${num}`);
+                    child_element.remove();
+                }
             }
-        }
 
-        function add_todo() {
-            if (writing) {
-                let todo_text = ($('#todo-input').val()).trim()
+            function add_todo() {
+                if (writing) {
+                    let todo_text = ($('#todo-input').val()).trim()
 
-                if (todo_text != "") {
-                    let temp_html = `<li class="todo_child list-group-item" id="todo_child_${array_num}">
+                    if (todo_text != "") {
+                        let temp_html = `<li class="todo_child list-group-item" id="todo_child_${array_num}">
                                         <strong class="todo_child-context">${todo_text}</strong>
 
                                         <div class="todo_child-bts">
@@ -194,123 +210,123 @@
                                         </div>
 
                                     </li>`
-                    array_todo.push(todo_text)
-                    array_num += 1
-                    console.log(array_num, array_todo)
-                    $('#todo-input').val('');
-                    $('#todo_parent').append(temp_html);
-                    alert("To-do 리스트에 추가 되었습니다.")
-                    $('#todo-input').focus();
+                        array_todo.push(todo_text)
+                        array_num += 1
+                        console.log(array_num, array_todo)
+                        $('#todo-input').val('');
+                        $('#todo_parent').append(temp_html);
+                        alert("To-do 리스트에 추가 되었습니다.")
+                        $('#todo-input').focus();
+                    }
                 }
             }
-        }
 
 
-        function toStringByFormatting(source, delimiter = '-') {
-            const year = source.getFullYear();
-            const month = leftPad(source.getMonth() + 1);
-            const day = leftPad(source.getDate());
+            function toStringByFormatting(source, delimiter = '-') {
+                const year = source.getFullYear();
+                const month = leftPad(source.getMonth() + 1);
+                const day = leftPad(source.getDate());
 
-            return [year, month, day].join(delimiter);
-        }
-
-        // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
-        function logout() {
-            $.removeCookie('mytoken');
-            alert('로그아웃!')
-            window.location.href = '/login'
-        }
-
-        function save_comment() {
-           // <!-- 제목 / 내용 2가지 체크 빈칸일 경우 alart -->
-            if ($('#context-title').val() == '' || $('#summernote').val() == '' || $('#summernote').val() == '<p><br></p>') {
-                alert('제목과 내용을 모두 채워주세요! (오늘 할 일은 선택)');
-                return;
+                return [year, month, day].join(delimiter);
             }
 
-            //<!-- Todo리스트 있는지 확인 후 빈 값 지우고 array_todo 로 다시 저장하기 -->
-            if(array_todo.length>0){
-                array_todo=array_todo.filter(function(item) {
-                return item !== null && item !== undefined && item !== '';
-                });
+            // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
+            function logout() {
+                $.removeCookie('mytoken');
+                alert('로그아웃!')
+                window.location.href = '/login'
             }
 
-            let title = $('#context-title').val()
-            let comment = $('#summernote').val()
-
-            let id = id_data
-            let date = today
-
-            // 제목: title [title_give]
-            // 내용 : comment [comment_give]
-            // 할일: array_todo [todo_give]
-            // id값 : id_data [id_give]
-            // 오늘 날짜 : date [date_give]
-
-            $.ajax({
-                type: 'POST',
-                url: '/upload',
-                data: {title_give: title, comment_give: comment, todo_give: array_todo, id_give: id, date_give: date},
-                success: function (response) {
-                    console.log(response)
-                    alert(response['msg'])
-                    window.location.reload()
+            function save_comment() {
+                // <!-- 제목 / 내용 2가지 체크 빈칸일 경우 alart -->
+                if ($('#context-title').val() == '' || $('#summernote').val() == '' || $('#summernote').val() == '<p><br></p>') {
+                    alert('제목과 내용을 모두 채워주세요! (오늘 할 일은 선택)');
+                    return;
                 }
-            })
-        }
 
-        function modify_note(num) {
-            console.log("수정: ",num);
-        }
-
-        function delet_note(num){
-            console.log("삭제:",num);
-        }
-
-        function more_context(num) {
-            if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
-                if (typeof open_note == "number") {
-                    document.getElementsByClassName("card-text")[open_note].style.height = "72px";
-                    document.getElementsByClassName("card-text")[open_note].style.display = "-webkit-box";
-                    document.getElementsByClassName("more_bt")[open_note].style.display = "block";
-                    document.getElementsByClassName("hide_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("edit_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("del_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("todo-note-list")[open_note].style.display = "none";
+                //<!-- Todo리스트 있는지 확인 후 빈 값 지우고 array_todo 로 다시 저장하기 -->
+                if(array_todo.length>0){
+                    array_todo=array_todo.filter(function(item) {
+                        return item !== null && item !== undefined && item !== '';
+                    });
                 }
-                document.getElementsByClassName("card-text")[num].style.height = "100%";
-                document.getElementsByClassName("card-text")[num].style.display = "block";
-                document.getElementsByClassName("more_bt")[num].style.display = "none";
-                document.getElementsByClassName("hide_bt")[num].style.display = "block";
-                document.getElementsByClassName("edit_bt")[num].style.display = "block";
-                document.getElementsByClassName("del_bt")[num].style.display = "block";
-                document.getElementsByClassName("todo-note-list")[num].style.display = "block";
-                open_note = num;
-            } else {
-                document.getElementsByClassName("card-text")[num].style.height = "72px";
-                document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
-                document.getElementsByClassName("more_bt")[num].style.display = "block";
-                document.getElementsByClassName("hide_bt")[num].style.display = "none";
-                document.getElementsByClassName("edit_bt")[num].style.display = "none";
-                document.getElementsByClassName("del_bt")[num].style.display = "none";
-                document.getElementsByClassName("todo-note-list")[num].style.display = "none";
-            }
-        }
 
-        function show_comment() {
-            $.ajax({
-                type: "GET",
-                url: "/getcomment",
-                data: {},
-                success: function (response) {
-                    let rows = response['comments']
-                    for (let i = 0; i < rows.length; i++) {
-                        console.log(rows[i])
-                        let title = rows[i]['title']
-                        let comment = rows[i]['comment']
-                        let date = rows[i]['date']
-                        let count = rows[i]['count']
-                        let temp_html = `<div class="card border-dark mb-3" id="item_note_${count}">
+                let title = $('#context-title').val()
+                let comment = $('#summernote').val()
+
+                let id = id_data
+                let date = today
+
+                // 제목: title [title_give]
+                // 내용 : comment [comment_give]
+                // 할일: array_todo [todo_give]
+                // id값 : id_data [id_give]
+                // 오늘 날짜 : date [date_give]
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/upload',
+                    data: {title_give: title, comment_give: comment, todo_give: array_todo, id_give: id, date_give: date},
+                    success: function (response) {
+                        console.log(response)
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                })
+            }
+
+            function modify_note(num) {
+                console.log("수정: ",num);
+            }
+
+            function delet_note(num){
+                console.log("삭제:",num);
+            }
+
+            function more_context(num) {
+                if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
+                    if (typeof open_note == "number") {
+                        document.getElementsByClassName("card-text")[open_note].style.height = "72px";
+                        document.getElementsByClassName("card-text")[open_note].style.display = "-webkit-box";
+                        document.getElementsByClassName("more_bt")[open_note].style.display = "block";
+                        document.getElementsByClassName("hide_bt")[open_note].style.display = "none";
+                        document.getElementsByClassName("edit_bt")[open_note].style.display = "none";
+                        document.getElementsByClassName("del_bt")[open_note].style.display = "none";
+                        document.getElementsByClassName("todo-note-list")[open_note].style.display = "none";
+                    }
+                    document.getElementsByClassName("card-text")[num].style.height = "100%";
+                    document.getElementsByClassName("card-text")[num].style.display = "block";
+                    document.getElementsByClassName("more_bt")[num].style.display = "none";
+                    document.getElementsByClassName("hide_bt")[num].style.display = "block";
+                    document.getElementsByClassName("edit_bt")[num].style.display = "block";
+                    document.getElementsByClassName("del_bt")[num].style.display = "block";
+                    document.getElementsByClassName("todo-note-list")[num].style.display = "block";
+                    open_note = num;
+                } else {
+                    document.getElementsByClassName("card-text")[num].style.height = "72px";
+                    document.getElementsByClassName("card-text")[num].style.display = "-webkit-box";
+                    document.getElementsByClassName("more_bt")[num].style.display = "block";
+                    document.getElementsByClassName("hide_bt")[num].style.display = "none";
+                    document.getElementsByClassName("edit_bt")[num].style.display = "none";
+                    document.getElementsByClassName("del_bt")[num].style.display = "none";
+                    document.getElementsByClassName("todo-note-list")[num].style.display = "none";
+                }
+            }
+
+            function show_comment() {
+                $.ajax({
+                    type: "GET",
+                    url: "/getcomment",
+                    data: {},
+                    success: function (response) {
+                        let rows = response['comments']
+                        for (let i = 0; i < rows.length; i++) {
+                            console.log(rows[i])
+                            let title = rows[i]['title']
+                            let comment = rows[i]['comment']
+                            let date = rows[i]['date']
+                            let count = rows[i]['count']
+                            let temp_html = `<div class="card border-dark mb-3" id="item_note_${count}">
                                             <div class="card-header">
                                                 <!-- 노트 상단 왼쪽 -->
                                                 <div class="note-top-day ml-2">Note ${count}</div>
@@ -344,11 +360,11 @@
                                                 </div>
                                             </div>
                                         </div>`
-                        $('#comment-list').append(temp_html)
+                            $('#comment-list').append(temp_html)
+                        }
                     }
-                }
-            });
-        }
+                });
+            }
     </script>
 
 </head>
@@ -364,13 +380,19 @@
         <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i>
         </button>
     </div>
-        <div class="share-box" style="display: flex; ">
+    <div class="share-box">
         <button type="button" id="shareTw" onclick="sharetwitter()"><img src="static/twitter.png" style="height:30px;  alt=""></button>
         <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png" style="height:30px; alt=""></button>
-        <button type="button" id="shareKt"><img src="static/kakaotalk.png" style="height:30px; alt=""></button>
+        <button type="button" id="shareKt" onclick="sharekakaotalk()"><img src="static/kakaotalk.png" style="height:30px; alt=""></button>
     </div>
+
     </div>
     <div id="comment-list">
+        <!-- 차순 추가 -->
+        <div>
+            <button type="button" id="filter"><img src="static/filter.png"
+                                                   style="height:30px;alt="></button>
+        </div>
         <!-- 노트1 추가 -->
         <div class="card border-dark mb-3" id="item_note_0">
             <div class="card-header">
@@ -395,12 +417,12 @@
 
 
                     <div class="list-group">
-    <!--TODO가 없을때 상단 표시-->
+                        <!--TODO가 없을때 상단 표시-->
                         <h7 class="todo-notice ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-bullhorn"></i> 지금 TO DO LIST 를 만들어보세요!</i></h7>
-    <!--TODO가 있을때 상단 표시-->
+                        <!--TODO가 있을때 상단 표시-->
                         <h3 class="todo-logo ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-pen-to-square"> TO DO LIST</i></h3>
-    <!--TODO추가구역 시작-->
-    <!--todoitem 시작-->
+                        <!--TODO추가구역 시작-->
+                        <!--todoitem 시작-->
                         <div class="list-group-item todo-item todo-active" aria-current="true" todo-num="1">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -408,7 +430,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝-->
+                        <!--todoitem 끝-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="2">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -416,7 +438,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝/시작-->
+                        <!--todoitem 끝/시작-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="3">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -424,7 +446,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝/시작-->
+                        <!--todoitem 끝/시작-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="4">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -432,7 +454,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-   <!--TODO추가구역 끝-->
+                        <!--TODO추가구역 끝-->
                     </div>
                 </div>
                 <!-- 노트 버튼 (수정/삭제/감추기/더보기) -->
@@ -474,12 +496,12 @@
 
                 <div class="todo-note-list mt-4" style="display:none">
                     <div class="list-group">
-    <!--TODO가 없을때 상단 표시-->
+                        <!--TODO가 없을때 상단 표시-->
                         <h7 class="todo-notice ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-bullhorn"></i> 지금 TO DO LIST 를 만들어보세요!</i></h7>
-    <!--TODO가 있을때 상단 표시-->
+                        <!--TODO가 있을때 상단 표시-->
                         <h3 class="todo-logo ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-pen-to-square"> TO DO LIST</i></h3>
-    <!--TODO추가구역 시작-->
-    <!--todoitem 시작-->
+                        <!--TODO추가구역 시작-->
+                        <!--todoitem 시작-->
                         <div class="list-group-item todo-item todo-active" aria-current="true" todo-num="1">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -487,7 +509,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝-->
+                        <!--todoitem 끝-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="2">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -495,7 +517,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝/시작-->
+                        <!--todoitem 끝/시작-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="3">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -503,7 +525,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝/시작-->
+                        <!--todoitem 끝/시작-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="4">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -511,7 +533,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-   <!--TODO추가구역 끝-->
+                        <!--TODO추가구역 끝-->
                     </div>
                 </div>
                 <div class="note-button ml-3 mt-2">
@@ -546,12 +568,12 @@
                 </div>
                 <div class="todo-note-list mt-4" style="display:none">
                     <div class="list-group">
-    <!--TODO가 없을때 상단 표시-->
+                        <!--TODO가 없을때 상단 표시-->
                         <h7 class="todo-notice ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-bullhorn"></i> 지금 TO DO LIST 를 만들어보세요!</i></h7>
-    <!--TODO가 있을때 상단 표시-->
+                        <!--TODO가 있을때 상단 표시-->
                         <h3 class="todo-logo ml-3 mb-3" style="text-align: left"><i class="fa-solid fa-pen-to-square"> TO DO LIST</i></h3>
-    <!--TODO추가구역 시작-->
-    <!--todoitem 시작-->
+                        <!--TODO추가구역 시작-->
+                        <!--todoitem 시작-->
                         <div class="list-group-item todo-item todo-active" aria-current="true" todo-num="1">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -559,7 +581,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝-->
+                        <!--todoitem 끝-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="2">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -567,7 +589,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝/시작-->
+                        <!--todoitem 끝/시작-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="3">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -575,7 +597,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-    <!--todoitem 끝/시작-->
+                        <!--todoitem 끝/시작-->
                         <div class="list-group-item todo-item todo-none" aria-current="true" todo-num="4">
                             <div class="icon_state_todo">
                                 <div class="fa-solid fa-circle-check mr-3" id="icon_success" style="color:green"> 임무완료!</div>
@@ -583,7 +605,7 @@
                             </div>
                             <span class="todo-item-text">The current link item</span>
                         </div>
-   <!--TODO추가구역 끝-->
+                        <!--TODO추가구역 끝-->
                     </div>
                 </div>
                 <div class="note-button ml-3 mt-2">
