@@ -97,18 +97,17 @@
 
             return [year, month, day].join(delimiter);
         }
-
-        function sharetwitter() {
-            let sendUrl = "naver.com";
-            let sendText = "공유 테스트";
-            window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
-        }
-
         let open_note = false;
         let writing = false;
         let array_todo = [];
         let array_num = 0;
 
+        //트위터로 공유하기
+        function sharetwitter() {
+            let sendUrl = "naver.com";
+            let sendText = "공유 테스트";
+            window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl);
+        }
         
         //페이스북 공유하기
         $(document).ready(function () {
@@ -121,6 +120,7 @@
                let sendUrl = 'news.v.daum.net/v/20220319120213003';
                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${sendUrl}`);
         }
+
             //카카오톡 공유하기
         function sharekakaotalk() {
             Kakao.init('7daa7d5fef046cea4ec3b64870f2c4d3');
@@ -364,6 +364,12 @@
         <button class="btn btn-light" onclick="find_word()"><i class="fa-solid fa-magnifying-glass"></i>
         </button>
     </div>
+        <div class="share-box" style="display: flex; ">
+        <button type="button" id="shareTw" onclick="sharetwitter()"><img src="static/twitter.png" style="height:30px;  alt=""></button>
+        <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png" style="height:30px; alt=""></button>
+        <button type="button" id="shareKt"><img src="static/kakaotalk.png" style="height:30px; alt=""></button>
+    </div>
+    </div>
     <div id="comment-list">
         <!-- 노트1 추가 -->
         <div class="card border-dark mb-3" id="item_note_0">
@@ -598,13 +604,6 @@
         </div>
 
 
-    </div>
-    <div class="main-box">
-        <div class="share_btn">
-            <button type="button" onclick="sharetwitter()" class="btn_comm">트위터로 공유하기</button>
-            <button type="button" id="shareFb" class="btn_comm">페이스북으로 공유하기</button>
-            <button type="button" id="shareKt" class="btn_comm">카카오톡으로 공유하기</button>
-        </div>
     </div>
 
 </main>
