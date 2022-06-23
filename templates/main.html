@@ -237,8 +237,6 @@
                 alert('로그아웃!')
                 window.location.href = '/login'
             }
-
-
             function save_comment() {
            // <!-- 제목 / 내용 2가지 체크 빈칸일 경우 alart -->
             if ($('#context-title').val() == '' || $('#summernote').val() == '' || $('#summernote').val() == '<p><br></p>') {
@@ -298,49 +296,6 @@
             });
 
         }
-        function more_context(num) {
-            if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
-                if (typeof open_note == "number") {
-                    document.getElementsByClassName("card-text")[open_note].style.height = "72px";
-                    document.getElementsByClassName("card-text")[open_note].style.display = "-webkit-box";
-                    document.getElementsByClassName("more_bt")[open_note].style.display = "block";
-                    document.getElementsByClassName("hide_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("edit_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("del_bt")[open_note].style.display = "none";
-                    document.getElementsByClassName("todo-note-list")[open_note].style.display = "none";
-                }
-
-                let title = $('#context-title').val()
-                let comment = $('#summernote').val()
-
-                let id = id_data
-                let date = today
-
-                // 제목: title [title_give]
-                // 내용 : comment [comment_give]
-                // 할일: array_todo [todo_give]
-                // id값 : id_data [id_give]
-                // 오늘 날짜 : date [date_give]
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/upload',
-                    data: {title_give: title, comment_give: comment, todo_give: array_todo, id_give: id, date_give: date},
-                    success: function (response) {
-                        console.log(response)
-                        alert(response['msg'])
-                        window.location.reload()
-                    }
-                })
-            }
-
-            function modify_note(num) {
-                console.log("수정: ",num);
-            }
-
-            function delet_note(num){
-                console.log("삭제:",num);
-            }
 
             function more_context(num) {
                 if (document.getElementsByClassName("more_bt")[num].style.display == 'block') {
@@ -413,7 +368,7 @@
                                                     <button type="button" class="more_bt btn btn-secondary ml-1" onclick="more_context(${count})"
                                                             style="display:block"><i class="fa-solid fa-caret-down"></i> 더보기
                                                     </button>
-                                                    <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(${count}"
+                                                    <button type="button" class="hide_bt btn btn-secondary ml-1" onclick="more_context(${count})"
                                                             style="display:none"><i class="fa-solid fa-caret-up"></i> 감추기
                                                     </button>
                                                 </div>
@@ -442,8 +397,7 @@
     <div class="share-box">
         <button type="button" id="shareTw" onclick="sharetwitter()"><img src="static/twitter.png" style="height:30px;  alt=""></button>
         <button type="button" id="shareFb" onclick="sharefacebook()"><img src="static/facebook.png" style="height:30px; alt=""></button>
-        <button type="button" id="shareKt" onclick="sharekakaotalk('kakaotalk')" >
-                    <img src="static/kakaotalk.png" style="height:30px; alt=""></button>
+        <button type="button" id="shareKt" onclick="sharekakaotalk('kakaotalk')"><img src="static/kakaotalk.png" style="height:30px; alt=""></button>
 
         </ul>
 
